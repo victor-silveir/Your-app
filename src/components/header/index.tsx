@@ -1,3 +1,4 @@
+import HamburgerMenu from './MenuHamburger'
 import { Headr, Navbar, NavMenu, NavLogo, NavItens, MHeadr } from './styles'
 
 export function Header() {
@@ -12,6 +13,14 @@ export function Header() {
                 <NavItens>Login</NavItens>
             </Navbar>
         </Headr>
+    )
+}
+
+export function MobileHeader() {
+    return (
+        <MHeadr>
+            <HamburgerMenu />
+        </MHeadr>
     )
 }
 
