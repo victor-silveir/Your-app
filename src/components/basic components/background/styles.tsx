@@ -16,6 +16,6 @@ export const Container = styled.div`
       background: ${props => `url(${props.backgroundImage}) no-repeat center`};
       background: ${props => `${props.Color}`};
       background-size: cover;
-      filter: brightness(50%);
+      filter: brightness(50%) grayscale(100%);
   }
 `
