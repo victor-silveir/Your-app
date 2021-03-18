@@ -8,7 +8,7 @@ export const Container = styled.div`
   &::before {
       height: 100%;
       content: "";
-      position: fixed;
+      position: ${props => props.fixed && 'fixed'};
       left: 0;
       right: 0%;
       z-index: -1;
@@ -16,6 +16,6 @@ export const Container = styled.div`
       background: ${props => `url(${props.backgroundImage}) no-repeat center`};
       background: ${props => `${props.Color}`};
       background-size: cover;
-      filter: brightness(50%) grayscale(100%);
+      filter: brightness(50%);
   }
 `

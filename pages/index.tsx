@@ -1,7 +1,6 @@
-import Background from "../src/components/basic components/background/indext";
-import Footer from "../src/components/footer";
+import Background from "../src/components/basic components/background/index";
 import FormLogin from "../src/components/form-login";
-import { Header, MobileHeader } from "../src/components/header";
+import styled from 'styled-components'
 
 interface UserCreds {
   userName: string,
@@ -13,14 +12,33 @@ const initialData: UserCreds = {
   password: ''
 }
 
+const Container = styled.div`
+  height: 100vh;
+  display: flex;
+  align-items: stretch;
+  flex-direction: row;
+
+`
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  place-content: center;
+  width: 100%;
+  max-width: 40rem;
+`
+
 
 export default function Home() {
   return (
-    <>
-    <FormLogin initialData={initialData} onSubmit={async (values) => {
-      console.log(values);
-    }}/>
-    <Background backgroundImage="img/HomeBackground.jpg" />
-    </>
-    )
+    <Container>
+      <Content>
+        <FormLogin initialData={initialData} handleData={async (values) => {
+          console.log(values);
+        }} />
+      </Content>
+      <Background backgroundImage='img/background2.jpg'/>
+    </Container>
+  )
 }

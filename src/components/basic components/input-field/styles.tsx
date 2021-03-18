@@ -4,8 +4,8 @@ import styled from 'styled-components'
 export const InputField = styled(Field)`
      background-color: #232129;
         border: 2px solid #232129;
-        width: ${props => props.Width || '80%'};
-        padding: 0.5rem;
-        border-radius: 0.125rem;
+        width: ${props => props.Width || '100%'};
+        padding: ${props => props.Padding};
+        border-radius: 0.625rem;
         font-size: 1rem;
 `
