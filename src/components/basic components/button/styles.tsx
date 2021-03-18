@@ -11,9 +11,10 @@ export const ButtonCustom = styled.button`
     font-size: 0.9rem;
     margin-top: 1rem;
     transition: 0.5s ease;
+    cursor: pointer;
 
     &:hover {
-        background-color: #ff9000;
+        background-color: ${props => props.backgroundHover};
     }
 `
   
