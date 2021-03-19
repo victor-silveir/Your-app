@@ -21,6 +21,11 @@ const GlobalStyle = createGlobalStyle`
     }
     input:focus{
       outline: none;
+      border-color: #ff9000;
+
+      &::placeholder {
+        color: #ff9000;
+      }
     }
 `
 
