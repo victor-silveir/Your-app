@@ -9,11 +9,7 @@ import styled from 'styled-components'
         background: #312E38;
         padding: 20px;
         border-radius: 25px;
-        
-        button {
-            margin: 1rem auto;
-        }
-
+    
         @media(max-width: 90rem) {
             max-width: 80rem;
             
@@ -199,7 +195,9 @@ import styled from 'styled-components'
     export const EmailButtonDiv = styled.div`
         display: flex;
         width: 100%;
-        margin: 1rem auto;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
     `
 
     export const CustomerButtonDiv = styled.div`
@@ -207,4 +205,10 @@ import styled from 'styled-components'
             display: flex;
             justify-content: center;
             place-content: center;
+
+            button {
+                & + button {
+                    margin-left: 1rem;
+                }
+            }
     `

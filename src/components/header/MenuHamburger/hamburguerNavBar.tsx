@@ -7,7 +7,7 @@ function HamburgerNavBar() {
         <NavContainer>
             <NavList>
                 <Navlink>
-                    <img src="img/Hourglass.svg" />
+                    <img src="/img/Hourglass.svg" />
                 </Navlink>
                 <Navlink>
                     <a>Home</a>

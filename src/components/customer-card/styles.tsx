@@ -32,6 +32,16 @@ export const Customer = styled.div`
         }
 
         button {
-        margin: 2rem auto;
+        margin: 1rem auto;
+            & + button {
+                margin-top: 0rem;
+            }
+        }
+    `
+
+    export const CustomerUpdate = styled(Customer)`
+
+        button {
+            margin: 0 0;
         }
     `

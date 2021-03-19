@@ -27,6 +27,9 @@ const GlobalStyle = createGlobalStyle`
         color: #ff9000;
       }
     }
+    button:focus{
+      outline: none;
+    }
 `
 
 

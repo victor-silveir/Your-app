@@ -135,8 +135,8 @@ function NewCustomerForm(props) {
                         )}
                     </FieldArray>
                     <CustomerButtonDiv>
-                        <Button backgroundHover='green' width='30%' height='4rem' fontWeight='400' color='#ff9000' type='submit'>Save Customer</Button>
-                        <Button backgroundHover='red' width='30%' height='4rem' fontWeight='400' color='#ff9000' type='submit'>Cancel</Button>
+                        <Button backgroundHover='green' width='40%' height='4rem' fontWeight='400' color='#ff9000' type='submit'>Save Customer</Button>
+                        <Button backgroundHover='red' width='40%' height='4rem' fontWeight='400' color='#ff9000' type='submit'>Cancel</Button>
                     </CustomerButtonDiv>
                 </NewCustomersContent>
             )}
