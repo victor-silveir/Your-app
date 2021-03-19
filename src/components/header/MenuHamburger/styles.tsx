@@ -38,6 +38,7 @@ export const Navlink = styled.li`
 export const HamburgerMenuContainer = styled.div`
     display: flex;
     align-items: flex-start;
+    position: relative;
 `
 
 export const Container = styled(motion.div)`
@@ -51,13 +52,15 @@ export const Container = styled(motion.div)`
     position: fixed;
     top: 0;
     left: 0;
-    padding: 1rem, 2.5 rem;   max-width: 300px;  
+    padding: 1.5rem 2.5rem;   
+    max-width: 300px;  
 `
 
 export const HamburgerButton = styled.div`
+    position: fixed;
     z-index: 9999999;
     left: 0;
     top: 0;
     cursor: pointer;
-    margin: 20px;
+    margin: 20px 20px;
 `

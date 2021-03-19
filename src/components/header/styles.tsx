@@ -12,7 +12,7 @@ export const Headr = styled.header`
 
 export const MHeadr = styled.header`
     width: 100%;
-    margin-bottom: 2rem;
+    margin-bottom: 5rem;
     position: sticky;
     display: none;
 
