@@ -5,6 +5,7 @@ import { Header, MobileHeader } from "../../src/components/header";
 import { CostumersDiv, CustomersContent, CustomersItems } from "../../src/components/customers-list/styles";
 import Link from 'next/link'
 import { Span } from "../../src/components/basic components/span/styles";
+import NewCustomerForm from "../../src/components/new-customer-form";
 
 export async function getStaticProps() {
     const res = await fetch(`http://localhost:8080/clients/`, { headers: { 'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTgwMDAxNjE2MTAzNzk4fQ.eC0osSNIPmCsX_xMFCGW43fngNNjjzFO0mE1csq2oTajzC7aTmzdV-DOYRcuVzgiQcrkSbOR733wmIZ7FU-l1A' } })
@@ -15,7 +16,7 @@ export async function getStaticProps() {
 
 function Customers({clients}) {
     return (
-        <Background backgroundImage='img/background2.jpg'>
+        <Background  fixed backgroundImage='img/background2.jpg'>
             <Header />
             <MobileHeader />
             <Container>
@@ -36,8 +37,9 @@ function Customers({clients}) {
                         </CostumersDiv>
                     </Link>
                 </CustomersItems>
-            ))}
+            ))};
         </CustomersContent> 
+        <NewCustomerForm />
             </Container>
         </Background>
     );

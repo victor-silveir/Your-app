@@ -1,14 +1,14 @@
 import styled from 'styled-components'
 
 export const ButtonCustom = styled.button`
-    width: 100%;
-    height: 3.5rem;
+    width: ${props => props.width || '100%'};
+    height: ${props => props.height || '3.5rem'};
     padding: 0 1rem;
     border-radius: 0.625rem;
-    background-color: #a1a1a1;
+    background-color: ${props => props.color || '#a1a1a1'};
     border: 0;
-    font-weight: 600;
-    font-size: 0.9rem;
+    font-weight: ${props => props.fontWeight || '600'};
+    font-size: 1rem;
     margin-top: 1rem;
     transition: 0.5s ease;
     cursor: pointer;
