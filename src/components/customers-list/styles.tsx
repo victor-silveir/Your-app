@@ -4,7 +4,7 @@ import styled from 'styled-components'
         width: 100%;
         flex: 1;
         margin: 0 auto;
-        display: ${props => props.display};
+        display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: space-between;

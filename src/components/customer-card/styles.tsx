@@ -32,19 +32,6 @@ export const Customer = styled.div`
         }
 
         button {
-        width: 100%;
-        height: 3.5rem;
-        padding: 0 ;
-        border-radius: 0.625rem;
-        background-color: #232129;
-        color: #ffffff;
-        border: 0;
-        font-weight: 400;
-        font-size: 1rem;
         margin: 2rem auto;
-        transition: 0.5s ease;
-
-    
-
         }
     `
