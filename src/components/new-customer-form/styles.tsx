@@ -21,7 +21,15 @@ import styled from 'styled-components'
         
         h2 {
             margin-bottom: 2rem;
-        }     
+        }
+        
+        input {
+            pointer-events: ${props => props.isdisabled && 'none' };
+        }
+
+        button {
+            display: ${props => props.isvisible && 'none'};
+        }
     `
     export const PersonalInfoDiv = styled.div`
         display: flex;
@@ -185,6 +193,7 @@ import styled from 'styled-components'
 
         input{
                 margin-left: 1rem;
+                margin: 1rem;
         }
 
         button {

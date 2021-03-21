@@ -1,7 +1,6 @@
 import { Field, FieldArray, Formik } from "formik";
 import React from "react";
 import Button from "../basic components/button";
-import { ButtonCustom } from "../basic components/button/styles";
 import { InputField } from "../basic components/input-field/styles";
 import { Span } from "../basic components/span/styles";
 import { EmailButtonDiv, AdressSection1, AdressSection2, ButtonDiv, CodeDiv, CpfDiv, EmailList, NameDiv, NewCustomersContent, NumberDiv, PersonalInfoDiv, PhonesContent, PhonesList, RadioGroup, CustomerButtonDiv } from "./styles";
@@ -44,9 +43,9 @@ function NewCustomerForm(props) {
     return (
         <Formik onSubmit={async(values) => {
             console.log(values)
-        }} initialValues={inicialValues}>
+        }} initialValues={inicialValues} {...props}>
             {({ values }) => (
-                <NewCustomersContent {...props}>
+                <NewCustomersContent isdisabled={props.isdisabled} isvisible={props.isvisible}>
                     <h1>New Customer</h1>
                     <h2>Personal Info: </h2>
                     <PersonalInfoDiv>
@@ -78,29 +77,29 @@ function NewCustomerForm(props) {
                                     <PhonesList key={index}>
                                         <div>
                                             <CodeDiv>
-                                                <InputField padding='0.5rem' width='80%' name={`phones.${index}.stateCode`} placeholder="State Code*: " />
+                                                <InputField  padding='0.5rem' width='80%' name={`phones.${index}.stateCode`} placeholder="State Code*: " />
                                             </CodeDiv>
                                             <NumberDiv>
 
-                                                <InputField padding='0.5rem' width='80%' name={`phones.${index}.number`} placeholder="Number*: " />
+                                                <InputField  padding='0.5rem' width='80%' name={`phones.${index}.number`} placeholder="Number*: " />
                                             </NumberDiv>
                                         </div>
                                         <RadioGroup>
                                             <label>
-                                                <Field type="radio" name={`phones.${index}.type`} value={new Number(1)} checked={values.phones[index].type == new Number(1)} />
+                                                <Field disabled={props.isdisabled} type="radio" name={`phones.${index}.type`} value={new Number(1)} checked={values.phones[index].type == new Number(1)} />
                                                 <div>
                                                     Residencial
                                                     </div>
                                             </label>
                                             <label>
-                                                <Field id="name" type="radio" name={`phones.${index}.type`} value={new Number(2)} checked={values.phones[index].type == new Number(2)} />
+                                                <Field disabled={props.isdisabled} type="radio" name={`phones.${index}.type`} value={new Number(2)} checked={values.phones[index].type == new Number(2)} />
                                                 <div>
 
                                                     Comercial
                                                     </div>
                                             </label>
                                             <label>
-                                                <Field type="radio" name={`phones.${index}.type`} value={new Number(3)} checked={values.phones[index].type == new Number(3)} />
+                                                <Field disabled={props.isdisabled} type="radio" name={`phones.${index}.type`} value={new Number(3)} checked={values.phones[index].type == new Number(3)} />
                                                 <div>
                                                     Celular
                                                     </div>
