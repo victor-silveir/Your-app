@@ -3,10 +3,24 @@ import { InputField } from "../basic components/input-field/styles";
 import { Formlogin } from './styles'
 import { ButtonCustom } from '../basic components/button/styles'
 import { LoginSchema } from "../../services/validation/YupSchemas";
+import { useCallback } from "react";
+import { useAuth } from "../../hooks/AuthHook";
 
-function FormLogin({handleData, initialData}) {
+function FormLogin({initialData}) {
+
+    const {token, login} = useAuth();
+
+    const Login = useCallback((values) => {
+        console.log(values);
+        login({
+            userName: values.userName,
+            password: values.password
+        });
+        console.log(token)
+    }, [])
+
     return (
-        <Formik initialValues={initialData} onSubmit={handleData} validationSchema={LoginSchema}>
+        <Formik initialValues={initialData} onSubmit={Login} validationSchema={LoginSchema}>
             {({ errors, touched }) => (
             <Formlogin>
             <img src="img/Hourglass.svg"/>

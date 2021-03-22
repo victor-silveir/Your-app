@@ -1,31 +1,41 @@
-import { apiResolver } from "next/dist/next-server/server/api-utils";
-import { createContext, useCallback, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import { AuthCredentialsModel } from "../models/AuthCredentialsModel";
 import { api } from "../services/axios/api";
-
+import jwt from 'jsonwebtoken'
 interface AuthState {
     token: string;
 }
 
-interface AuthContectData {
+interface AuthContextData {
     token: string;
     login(credentials: AuthCredentialsModel): Promise<void>;
 }
 
-const AuthContext = createContext<AuthContectData>({} as AuthContectData);
+const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 function AuthProvider({ children }) {
 
     const [data, setData] = useState<AuthState>(() => {
 
-        const token = localStorage.getItem('@YourApp:token');
-        
-        if(token) {
-            return token
+        if (process.browser) {   
+            const token = localStorage.getItem('@YourApp:token');
+            
+            if (token) {
+                const decodedtoken = jwt.decode(token, {complete: true});
+                console.log(decodedtoken)
+                if(decodedtoken.exp < new Date()) {
+                    console.log('errou')
+                    localStorage.removeItem('@YourApp:token')
+                    return {} as AuthState;
+                } else {
+                    console.log(`ta liberado kkk`)
+                    return { token };
+                }
+            };
+            
         }
-
-        return {} as AuthState;
-    })
+            return {} as AuthState;
+    });
 
     const login = useCallback(async ({ userName, password }) => {
         const response = await api.post('login', {
@@ -33,11 +43,11 @@ function AuthProvider({ children }) {
             password
         });
 
-        const token = response.headers.get('Authorization');
+        const token = response.headers[('authorization')].substring(7);
 
         localStorage.setItem('@YourApp:token', token);
 
-        setData(token)
+        setData(token);
 
     }, [])
 
@@ -47,3 +57,15 @@ function AuthProvider({ children }) {
         </AuthContext.Provider>
     );
 };
+
+function useAuth(): AuthContextData {
+    const context = useContext(AuthContext);
+
+    if (!context) {
+        throw new Error('AuthProvider is required to useAuth');
+    }
+
+    return context;
+};
+
+export { AuthProvider, useAuth }

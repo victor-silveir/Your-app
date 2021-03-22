@@ -1,4 +1,5 @@
 import { createGlobalStyle, ThemProvider } from 'styled-components'
+import { AuthProvider } from '../src/hooks/AuthHook';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -36,8 +37,10 @@ const GlobalStyle = createGlobalStyle`
 function MyApp({ Component, pageProps }) {
   return (
     <>
-    <GlobalStyle />
+    <AuthProvider>
       <Component {...pageProps} />
+    </AuthProvider>
+    <GlobalStyle />
     </>
   );
 };

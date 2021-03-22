@@ -1,6 +1,8 @@
 import Background from "../src/components/basic components/background/index";
 import FormLogin from "../src/components/form-login";
 import styled from 'styled-components'
+import { useAuth } from "../src/hooks/AuthHook";
+import { useCallback } from "react";
 
 interface UserCreds {
   userName: string,
@@ -31,14 +33,17 @@ const Content = styled.div`
 
 
 export default function Home() {
+
+  const { login, token } = useAuth();
+
+  console.log(token);
+
   return (
     <Container>
       <Content>
-        <FormLogin initialData={initialData} handleData={async (values) => {
-          console.log(values);
-        }} />
+        <FormLogin initialData={initialData} />
       </Content>
       <Background backgroundImage='img/background2.jpg'/>
     </Container>
   )
-}
+};
