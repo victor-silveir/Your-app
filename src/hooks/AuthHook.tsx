@@ -21,9 +21,10 @@ function AuthProvider({ children }) {
             const token = localStorage.getItem('@YourApp:token');
             
             if (token) {
-                const decodedtoken = jwt.decode(token, {complete: true});
+                const decodedtoken = jwt.decode(token, {complete: true}).payload.exp;
                 console.log(decodedtoken)
-                if(decodedtoken.exp < new Date()) {
+                const date =  new Date().getTime() / 1000
+                if(decodedtoken < date) {
                     console.log('errou')
                     localStorage.removeItem('@YourApp:token')
                     return {} as AuthState;
