@@ -1,4 +1,4 @@
-import { Form } from 'formik'
+import { ErrorMessage, Form } from 'formik'
 import styled from 'styled-components'
 
     export const NewCustomersContent = styled(Form)`
@@ -170,7 +170,12 @@ import styled from 'styled-components'
             margin-left: auto;
         }
     `
-
+    
+    export const EmailDiv = styled.div`
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    `
 
     export const EmailList = styled.div`
         display: flex;
@@ -221,3 +226,13 @@ import styled from 'styled-components'
                 }
             }
     `
+
+    export const ErrorContainer = styled.div`
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        width: 100%;
+        margin-bottom: 1rem;
+    `
+  
