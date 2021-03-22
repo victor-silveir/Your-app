@@ -32,11 +32,9 @@ const Content = styled.div`
 `
 
 
-export default function Home() {
+export default function LoginPage() {
 
-  const { login, token } = useAuth();
-
-  console.log(token);
+  const { login, isAuth } = useAuth();
 
   return (
     <Container>

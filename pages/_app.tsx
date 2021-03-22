@@ -1,5 +1,8 @@
-import { createGlobalStyle, ThemProvider } from 'styled-components'
-import { AuthProvider } from '../src/hooks/AuthHook';
+import { createGlobalStyle } from 'styled-components'
+import { AuthProvider, ProtectRoute } from '../src/hooks/AuthHook';
+import LoginPage from './index'
+import Router from 'next/router'
+import { useCallback, useEffect } from 'react';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -33,16 +36,26 @@ const GlobalStyle = createGlobalStyle`
     }
 `
 
+export async function getServerSideProps({ req, res }) {
+
+  const token = req.headers[('authorization')];
+
+  return token
+}
+
 
 function MyApp({ Component, pageProps }) {
+
   return (
     <>
-    <AuthProvider>
-      <Component {...pageProps} />
-    </AuthProvider>
-    <GlobalStyle />
+      <AuthProvider>
+        <ProtectRoute>
+          <Component {...pageProps} />
+        </ProtectRoute>
+      </AuthProvider>
+      <GlobalStyle />
     </>
   );
-};
+}
 
 export default MyApp

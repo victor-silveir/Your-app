@@ -44,8 +44,6 @@ function NewCustomerForm(props) {
 
     const [isError, setIsError] = useState(true);
 
-    console.log(isError)
-
     return (
         <Formik onSubmit={async (values) => {
             console.log(values)
@@ -146,8 +144,8 @@ function NewCustomerForm(props) {
                             <>
                                 <EmailList>
                                     {values.emails.map((email, index) => (
-                                        <EmailDiv>
-                                        <div key={index}>
+                                        <EmailDiv key={index}>
+                                        <div>
                                             <InputField padding='0.5rem' width='80%' name={`emails.${index}`} placeholder="E-mail*:" />
                                             <Button width='25%' height='2.5rem' fontWeight='400' color='red' type="button" onClick={() => remove(index)}>Delete</Button>
                                         </div>

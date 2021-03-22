@@ -8,7 +8,7 @@ import { useAuth } from "../../hooks/AuthHook";
 
 function FormLogin({initialData}) {
 
-    const {token, login} = useAuth();
+    const {isAuth, login} = useAuth();
 
     const Login = useCallback((values) => {
         console.log(values);
@@ -16,7 +16,7 @@ function FormLogin({initialData}) {
             userName: values.userName,
             password: values.password
         });
-        console.log(token)
+        console.log(isAuth)
     }, [])
 
     return (
