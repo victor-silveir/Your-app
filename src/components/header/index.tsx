@@ -1,7 +1,11 @@
+import { useAuth } from '../../hooks/AuthHook'
 import HamburgerMenu from './MenuHamburger'
 import { Headr, Navbar, NavMenu, NavLogo, NavItens, MHeadr } from './styles'
 
 export function Header() {
+
+    const { logout } = useAuth();
+
     return (
         <Headr>
             <Navbar>
@@ -10,7 +14,7 @@ export function Header() {
                     <NavItens>Home</NavItens>
                     <NavItens>Clientes</NavItens>
                 </NavMenu>
-                <NavItens>Login</NavItens>
+                <NavItens onClick={logout}>Logout</NavItens>
             </Navbar>
         </Headr>
     )

@@ -1,11 +1,11 @@
-import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useState } from "react";
+import { createContext, useCallback, useContext, useLayoutEffect, useState } from "react";
 import { AuthCredentialsModel } from "../models/AuthCredentialsModel";
 import { api } from "../services/axios/api";
 import jwt from 'jsonwebtoken'
 import Router from "next/router";
 import LoginPage from "../../pages";
-import Unauthorized from "../../pages/AccessDenied";
 import Home from "../../pages/home";
+
 interface AuthState {
     token: string;
 }
@@ -13,6 +13,7 @@ interface AuthState {
 interface AuthContextData {
     isAuth: boolean;
     login(credentials: AuthCredentialsModel): Promise<void>;
+    logout(): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -26,14 +27,15 @@ function AuthProvider({ children }) {
 
             if (token) {
                 const decodedtoken = jwt.decode(token, { complete: true }).payload.exp;
-                console.log(decodedtoken)
-                const date = new Date().getTime() / 1000
+
+                const date = new Date().getTime() / 1000;
+
                 if (decodedtoken < date) {
-                    console.log('errou')
                     localStorage.removeItem('@YourApp:token')
+
                     return {} as AuthState;
                 } else {
-                    console.log(`ta liberado kkk`)
+
                     return { token };
                 }
             };
@@ -43,25 +45,33 @@ function AuthProvider({ children }) {
     });
 
     const login = useCallback(async ({ userName, password }) => {
-        const response = await api.post('login', {
+
+        await api.post('login', {
             userName,
             password
         }).then((response) => {
             const token = response.headers[('authorization')].substring(7);
-    
+
             localStorage.setItem('@YourApp:token', token);
-    
-            setData(token => token);
-            
-        }).finally(() => {
-            Router.push('/home')
+
+            setData({ token });
+
+            Router.push('/home');
         });
 
 
     }, [])
 
+    const logout = useCallback(() => {
+
+        localStorage.removeItem('@YourApp:token');
+
+        Router.reload();
+
+    }, [])
+
     return (
-        <AuthContext.Provider value={{ login, isAuth: !!data.token }}>
+        <AuthContext.Provider value={{ login, isAuth: !!data.token, logout }}>
             { children}
         </AuthContext.Provider>
     );
@@ -80,14 +90,19 @@ function useAuth(): AuthContextData {
 const ProtectRoute = ({ children }) => {
     const { isAuth } = useAuth();
     const [isWindow, setisWindow] = useState(false)
-    useLayoutEffect(() => {
-        if (typeof window !== "undefined") {
+    if (typeof window !== "undefined") {
+        useLayoutEffect(() => {
             setisWindow(true);
-        }
-    });
+        });
+    }
     if (isWindow) {
         if (!isAuth && window.location.pathname !== '/') {
+            Router.push('/');
             return < LoginPage />;
+        }
+        if (isAuth && window.location.pathname == '/') {
+            Router.push('/home');
+            return < Home />;
         }
     }
     return children;

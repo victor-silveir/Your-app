@@ -1,8 +1,12 @@
 import styled from 'styled-components'
+import { useAuth } from '../../../hooks/AuthHook';
 import { NavContainer, NavList, Navlink } from './styles'
 
 
 function HamburgerNavBar() {
+
+    const { logout } = useAuth();
+
     return (
         <NavContainer>
             <NavList>
@@ -16,7 +20,7 @@ function HamburgerNavBar() {
                     <a>Customers</a>
                 </Navlink>
             </NavList>
-            <a>Logout</a>
+            <a onClick={logout}>Logout</a>
         </NavContainer>
     );
 };
