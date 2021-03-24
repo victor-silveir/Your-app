@@ -11,8 +11,8 @@ export function Header() {
             <Navbar>
                 <NavMenu>
                     <NavLogo src="/img/Hourglass.svg"></NavLogo>
-                    <NavItens>Home</NavItens>
-                    <NavItens>Clientes</NavItens>
+                    <NavItens href="/home">Home</NavItens>
+                    <NavItens href="/customers">Clientes</NavItens>
                 </NavMenu>
                 <NavItens onClick={logout}>Logout</NavItens>
             </Navbar>
