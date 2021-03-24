@@ -6,7 +6,7 @@ import Background from "../../src/components/basic components/background";
 import { useCallback, useState } from "react";
 import CustomersList from "../../src/components/customers-list";
 import { useAuth } from "../../src/hooks/AuthHook";
-import { customerGetAll } from "../../src/services/axios/api";
+import { getAllCustomer } from "../../src/services/axios/api";
 
 interface CustomerData {
     id?: number;
@@ -26,9 +26,7 @@ function Customers() {
     
     const [isRendered, setIsRendered] = useState(true);
     const{token} = useAuth();
-    const{data, error} = customerGetAll<CustomerData[]>(token);
-
-    
+    const{data, error} = getAllCustomer<CustomerData[]>('clients/', token);
     const handleRender = useCallback(() => {
         setIsRendered(current => !current)
     }, [])

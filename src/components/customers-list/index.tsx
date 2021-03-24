@@ -7,13 +7,13 @@ function CustomersList(props) {
         <CustomersContent>
                     {props.clients?.map((client) => (
                         <CustomersItems key={client.id}>
-                            <Link href={`customers/${client.id}`}>
+                            <Link href="/customers/[id]" as={`/customers/${client.id}`}>
                                 <CostumersDiv>
                                     <Span>Name: </Span>
                                     <Span>{client.name}</Span>
                                 </CostumersDiv>
                             </Link>
-                            <Link href={`customers/${client.id}`}>
+                            <Link href={`/customers/${client.id}`}>
                                 <CostumersDiv>
                                     <Span>CPF: </Span>
                                     <Span>{client.cpf}</Span>

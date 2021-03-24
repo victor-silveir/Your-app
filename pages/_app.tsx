@@ -1,8 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
 import { AuthProvider, ProtectRoute } from '../src/hooks/AuthHook';
-import LoginPage from './index'
-import Router from 'next/router'
-import { useCallback, useEffect } from 'react';
 
 const GlobalStyle = createGlobalStyle`
 
