@@ -33,10 +33,10 @@ function AuthProvider({ children }) {
 
                 if (decodedtoken < date) {
                     localStorage.removeItem('@YourApp:token')
-
                     return {} as AuthState;
                 } else {
-
+                    api.defaults.headers.Authorization = `Bearer ${token}`
+                    console.log(api.defaults.headers.Authorization)
                     return { token };
                 }
             };
@@ -54,10 +54,11 @@ function AuthProvider({ children }) {
             const token = response.headers[('authorization')].substring(7);
 
             localStorage.setItem('@YourApp:token', token);
-
+            api.defaults.headers.Authorization = `Bearer ${token}`
+            console.log(api.defaults.headers.Authorization)
             setData({ token });
 
-            Router.push('/home');
+            Router.replace('/home');
         });
 
 
@@ -98,11 +99,11 @@ const ProtectRoute = ({ children }) => {
     }
     if (isWindow) {
         if (!isAuth && window.location.pathname !== '/') {
-            Router.push('/');
+            Router.replace('/');
             return < LoginPage />;
         }
         if (isAuth && window.location.pathname == '/') {
-            Router.push('/home');
+            Router.replace('/home');
             return < Home />;
         }
     }
