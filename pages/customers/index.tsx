@@ -32,7 +32,7 @@ function Customers() {
     }, [])
     
     return (
-        <Background fixed backgroundImage='img/background2.jpg'>
+        <Background fixed backgroundImage='/img/background2.jpg'>
             <Header />
             <MobileHeader />
             <Container>

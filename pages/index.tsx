@@ -41,7 +41,7 @@ export default function LoginPage() {
       <Content>
         <FormLogin initialData={initialData} />
       </Content>
-      <Background backgroundImage='img/background2.jpg'/>
+      <Background backgroundImage='/img/background2.jpg'/>
     </Container>
   )
 };

@@ -23,7 +23,7 @@ function FormLogin({initialData}) {
         <Formik initialValues={initialData} onSubmit={Login} validationSchema={LoginSchema}>
             {({ errors, touched }) => (
             <Formlogin>
-            <img src="img/Hourglass.svg"/>
+            <img src="/img/Hourglass.svg"/>
             <h3>YourApp - An app to CRUD</h3>
             <h1>Login</h1>
                 <InputField name='userName' placeholder="Username: " padding="1rem"/>
