@@ -1,5 +1,7 @@
 import { ErrorMessage, Field, FieldArray, Formik } from "formik";
 import React, { useState } from "react";
+import { useAuth } from "../../hooks/AuthHook";
+import { customerPost } from "../../services/axios/api";
 import { CustomerSchema } from "../../services/validation/YupSchemas";
 import Button from "../basic components/button";
 import { ErrorField } from "../basic components/ErrorsMessage/styles";
@@ -44,9 +46,24 @@ function NewCustomerForm(props) {
 
     const [isError, setIsError] = useState(true);
 
+    const{token} = useAuth();
+
+    console.log(token); 
+
     return (
         <Formik onSubmit={async (values) => {
-            console.log(values)
+            customerPost({
+                name: values.name,
+                cpf: values.cpf,
+                zipCode: values.zipCode,
+                address: values.address,
+                district: values.district,
+                complement: values.complement,
+                city: values.city,
+                state: values.state,
+                emails: values.emails,
+                phones: values.phones
+            }, token);
         }} initialValues={inicialValues} validationSchema={CustomerSchema} >
             {({ values, errors, touched }) => (
                 <NewCustomersContent autoComplete='off' isdisabled={props.isdisabled} isvisible={props.isvisible}>

@@ -12,6 +12,7 @@ interface AuthState {
 
 interface AuthContextData {
     isAuth: boolean;
+    token: string;
     login(credentials: AuthCredentialsModel): Promise<void>;
     logout(): void;
 }
@@ -71,7 +72,7 @@ function AuthProvider({ children }) {
     }, [])
 
     return (
-        <AuthContext.Provider value={{ login, isAuth: !!data.token, logout }}>
+        <AuthContext.Provider value={{ login, isAuth: !!data.token, logout, token: data.token }}>
             { children}
         </AuthContext.Provider>
     );

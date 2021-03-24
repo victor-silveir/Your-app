@@ -5,7 +5,7 @@ import { CostumersDiv, CustomersContent, CustomersItems } from "./styles";
 function CustomersList(props) {
     return (
         <CustomersContent>
-                    {props.clients.map((client) => (
+                    {props.clients?.map((client) => (
                         <CustomersItems key={client.id}>
                             <Link href={`customers/${client.id}`}>
                                 <CostumersDiv>
