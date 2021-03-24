@@ -47,9 +47,7 @@ function NewCustomerForm(props) {
     const [isError, setIsError] = useState(true);
 
     const{token} = useAuth();
-
-    console.log(token); 
-
+    
     return (
         <Formik onSubmit={async (values) => {
             customerPost({
@@ -64,7 +62,7 @@ function NewCustomerForm(props) {
                 emails: values.emails,
                 phones: values.phones
             }, token);
-        }} initialValues={inicialValues} validationSchema={CustomerSchema} >
+        }} initialValues={props.initialvalues} validationSchema={CustomerSchema} >
             {({ values, errors, touched }) => (
                 <NewCustomersContent autoComplete='off' isdisabled={props.isdisabled} isvisible={props.isvisible}>
                     <h1>New Customer</h1>
