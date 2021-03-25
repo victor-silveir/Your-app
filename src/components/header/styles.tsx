@@ -55,6 +55,9 @@ display: inline-block;
     font-weight: 400;
     position: relative;
     transition: 0.5s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: #ffffff;
 
     &::after {
         content: '';

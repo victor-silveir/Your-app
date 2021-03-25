@@ -44,8 +44,6 @@ const inicialValues: CustomerData = {
 
 function NewCustomerForm(props) {
 
-    const [isError, setIsError] = useState(true);
-
     const{token} = useAuth();
     
     return (
@@ -64,7 +62,7 @@ function NewCustomerForm(props) {
             }, token);
         }} initialValues={props.initialvalues} validationSchema={CustomerSchema} >
             {({ values, errors, touched }) => (
-                <NewCustomersContent autoComplete='off' isdisabled={props.isdisabled} isvisible={props.isvisible}>
+                <NewCustomersContent autoComplete='off' >
                     <h1>New Customer</h1>
                     <h2>Personal Info: </h2>
                     <PersonalInfoDiv>
@@ -119,20 +117,20 @@ function NewCustomerForm(props) {
                                             </div>
                                             <RadioGroup>
                                                 <label>
-                                                    <Field disabled={props.isdisabled} type="radio" name={`phones.${index}.type`} value={new Number(1)} checked={values.phones[index].type == new Number(1)} />
+                                                    <Field  type="radio" name={`phones.${index}.type`} value={new Number(1)} checked={values.phones[index].type == new Number(1)} />
                                                     <div>
                                                         Residencial
                                                     </div>
                                                 </label>
                                                 <label>
-                                                    <Field disabled={props.isdisabled} type="radio" name={`phones.${index}.type`} value={new Number(2)} checked={values.phones[index].type == new Number(2)} />
+                                                    <Field  type="radio" name={`phones.${index}.type`} value={new Number(2)} checked={values.phones[index].type == new Number(2)} />
                                                     <div>
 
                                                         Comercial
                                                     </div>
                                                 </label>
                                                 <label>
-                                                    <Field disabled={props.isdisabled} type="radio" name={`phones.${index}.type`} value={new Number(3)} checked={values.phones[index].type == new Number(3)} />
+                                                    <Field  type="radio" name={`phones.${index}.type`} value={new Number(3)} checked={values.phones[index].type == new Number(3)} />
                                                     <div>
                                                         Celular
                                                     </div>

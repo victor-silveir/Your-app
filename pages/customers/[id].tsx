@@ -4,6 +4,8 @@ import { CustomerUpdateCard } from "../../src/components/customer-card";
 import { Header, MobileHeader } from "../../src/components/header";
 import Modal from "../../src/components/modal";
 import NewCustomerForm from "../../src/components/new-customer-form";
+import UpdateCustomerForm from "../../src/components/update-customer-form";
+import { useAuth } from "../../src/hooks/AuthHook";
 import { api} from "../../src/services/axios/api";
 import { Container } from "./styles";
 
@@ -29,13 +31,16 @@ function Customer({ }) {
     const [isDisabled, setIsDisabled] = useState(true);
     const [isOpened, setIsOpened] = useState(false);
     const [client, setClient] = useState<CustomerData>()
+    const {isAuth} = useAuth();
 
     useEffect(() => {
-        api.get('clients/1').then((res) => {
-            setClient(res.data);
-        }).catch(err => {
-            alert(err.response.data);
-        })}, [])
+        if(isAuth) {
+            api.get('clients/1').then((res) => {
+                setClient(res.data);
+            }).catch(err => {
+                alert(err.response.data);
+            })} 
+        }, [])
 
         const toggleForm = useCallback(() => {
             setIsDisabled(current => !current)
@@ -55,7 +60,7 @@ function Customer({ }) {
             {isOpened && <Modal client={client} openModal={toggleDelete} />}
             <Container>
                 <CustomerUpdateCard enableDelete={toggleDelete} enableUpdate={toggleForm} />
-                <NewCustomerForm initialvalues={client} isdisabled={isDisabled ? 1 : 0} isvisible={isDisabled ? 1 : 0} />
+                <UpdateCustomerForm initialvalues={client} isdisabled={isDisabled ? 1 : 0} isvisible={isDisabled ? 1 : 0} />
             </Container>
         </Background>
 

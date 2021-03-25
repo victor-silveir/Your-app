@@ -22,6 +22,25 @@ interface CustomerData {
     emails: string[];
 }
 
+const inicialValues: CustomerData = {
+    name: '',
+    cpf: '',
+    zipCode: '',
+    address: '',
+    complement: '',
+    district: '',
+    city: '',
+    state: '',
+    phones: [{
+        stateCode: '',
+        number: '',
+        type: 1
+    }],
+    emails: [
+        ''
+    ]
+}
+
 function Customers() {
     
     const [isRendered, setIsRendered] = useState(true);
@@ -38,7 +57,7 @@ function Customers() {
             <Container>
                 <CustomerCard render={handleRender} />
                 {isRendered ? <CustomersList clients={data} />
-                    : <NewCustomerForm />
+                    : <NewCustomerForm initialvalues={inicialValues}/>
                 }
             </Container>
         </Background>
