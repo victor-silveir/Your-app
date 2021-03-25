@@ -22,23 +22,14 @@ interface CustomerData {
     emails: string[];
 }
 
-const inicialValues: CustomerData = {
-    name: '',
-    cpf: '',
-    zipCode: '',
-    address: '',
-    complement: '',
-    district: '',
-    city: '',
-    state: '',
+const inicialValues = {
     phones: [{
-        stateCode: '',
-        number: '',
-        type: 1
+        number: "",
     }],
     emails: [
         ''
     ]
+
 }
 
 function Customers() {

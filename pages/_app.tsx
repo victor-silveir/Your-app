@@ -1,5 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
 import { AuthProvider, ProtectRoute } from '../src/hooks/AuthHook';
+import Customers from './customers';
+import A from './test';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -47,7 +49,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <AuthProvider>
         <ProtectRoute>
-          <Component {...pageProps} />
+          <A />
         </ProtectRoute>
       </AuthProvider>
       <GlobalStyle />

@@ -1,7 +1,7 @@
 import { ErrorMessage, Form } from 'formik'
 import styled from 'styled-components'
 
-    export const NewCustomersContent = styled(Form)`
+    export const NewCustomersContent = styled.form`
         flex: 1;
         margin: 0 auto;
         display: flex;

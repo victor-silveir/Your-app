@@ -6,6 +6,8 @@ import { CustomerSchema } from "../../services/validation/YupSchemas";
 import Button from "../basic components/button";
 import { ErrorField } from "../basic components/ErrorsMessage/styles";
 import { InputField } from "../basic components/input-field/styles";
+import { Input } from "../basic components/input/styles";
+import MaskedInput from "../basic components/maskedinput";
 import { Span } from "../basic components/span/styles";
 import { EmailButtonDiv, AdressSection1, AdressSection2, ButtonDiv, CodeDiv, CpfDiv, EmailList, NameDiv, NewCustomersContent, NumberDiv, PersonalInfoDiv, PhonesContent, PhonesList, RadioGroup, CustomerButtonDiv, ErrorContainer, EmailDiv } from "./styles";
 
@@ -42,25 +44,24 @@ const inicialValues: CustomerData = {
     ]
 }
 
-function NewCustomerForm(props) {
+const inicialValues2 = {
+    phones: [{
+        number: "",
+    }],
+    emails: [
+        ''
+    ]
 
-    const{token} = useAuth();
-    
+}
+
+function NewCustomerForm(props) {
+   const  phones=['']
+    const { token } = useAuth();
+
     return (
         <Formik onSubmit={async (values) => {
-            customerPost({
-                name: values.name,
-                cpf: values.cpf,
-                zipCode: values.zipCode,
-                address: values.address,
-                district: values.district,
-                complement: values.complement,
-                city: values.city,
-                state: values.state,
-                emails: values.emails,
-                phones: values.phones
-            }, token);
-        }} initialValues={props.initialvalues} validationSchema={CustomerSchema} >
+           console.log(values)
+        }} initialValues={inicialValues} >
             {({ values, errors, touched }) => (
                 <NewCustomersContent autoComplete='off' >
                     <h1>New Customer</h1>
@@ -73,10 +74,10 @@ function NewCustomerForm(props) {
                             <InputField padding='0.5rem' width='80%' name="cpf" placeholder="CPF*: " />
                         </CpfDiv>
                     </PersonalInfoDiv>
-                        <ErrorContainer>
-                            {touched.name && errors.name && <ErrorField>{errors.name}</ErrorField>}
-                            {touched.cpf && errors.cpf && <ErrorField>{errors.cpf}</ErrorField>}
-                        </ErrorContainer>
+                    <ErrorContainer>
+                        {touched.name && errors.name && <ErrorField>{errors.name}</ErrorField>}
+                        {touched.cpf && errors.cpf && <ErrorField>{errors.cpf}</ErrorField>}
+                    </ErrorContainer>
                     <h2>Address:</h2>
                     <AdressSection1>
                         <InputField padding='0.5rem' width='25%' name="zipCode" placeholder="CEP*:" />
@@ -101,7 +102,7 @@ function NewCustomerForm(props) {
                         {({ remove, push }) => (
 
                             <PhonesContent>
-                                {values.phones.map((phone, index) => {
+                                {phones.map((phone, index) => {
 
                                     return (
 
@@ -112,25 +113,33 @@ function NewCustomerForm(props) {
                                                 </CodeDiv>
                                                 <NumberDiv>
 
-                                                    <InputField padding='0.5rem' width='80%' name={`phones.${index}.number`} placeholder="Number*: " />
                                                 </NumberDiv>
                                             </div>
+                                            <InputField name={`phones.${index}.number`}>
+                                                {({ field, form }) => {
+                                                    return (<MaskedInput
+                                                        name={`phones.${index}.number`}
+                                                        mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                                                        id={`phones.${index}.number`}
+                                                        placeholder="Phone Number*:" />)
+                                                    }} 
+                                                    </InputField>
                                             <RadioGroup>
                                                 <label>
-                                                    <Field  type="radio" name={`phones.${index}.type`} value={new Number(1)} checked={values.phones[index].type == new Number(1)} />
+                                                    <Input type="radio" name={`phones.${index}.type`} value={new Number(1)} checked={values.phones[index].type == new Number(1)} />
                                                     <div>
                                                         Residencial
                                                     </div>
                                                 </label>
                                                 <label>
-                                                    <Field  type="radio" name={`phones.${index}.type`} value={new Number(2)} checked={values.phones[index].type == new Number(2)} />
+                                                    <Input type="radio" name={`phones.${index}.type`} value={new Number(2)} checked={values.phones[index].type == new Number(2)} />
                                                     <div>
 
                                                         Comercial
                                                     </div>
                                                 </label>
                                                 <label>
-                                                    <Field  type="radio" name={`phones.${index}.type`} value={new Number(3)} checked={values.phones[index].type == new Number(3)} />
+                                                    <Input type="radio" name={`phones.${index}.type`} value={new Number(3)} checked={values.phones[index].type == new Number(3)} />
                                                     <div>
                                                         Celular
                                                     </div>
@@ -158,15 +167,15 @@ function NewCustomerForm(props) {
                                 <EmailList>
                                     {values.emails.map((email, index) => (
                                         <EmailDiv key={index}>
-                                        <div>
-                                            <InputField padding='0.5rem' width='80%' name={`emails.${index}`} placeholder="E-mail*:" />
-                                            <Button width='25%' height='2.5rem' fontWeight='400' color='red' type="button" onClick={() => remove(index)}>Delete</Button>
-                                        </div>
-                                        <ErrorContainer>
-                                        <ErrorMessage name={`emails[${index}]`} component={ErrorField}/>
-                                        </ErrorContainer>
+                                            <div>
+                                                <InputField padding='0.5rem' width='80%' name={`emails.${index}`} placeholder="E-mail*:" />
+                                                <Button width='25%' height='2.5rem' fontWeight='400' color='red' type="button" onClick={() => remove(index)}>Delete</Button>
+                                            </div>
+                                            <ErrorContainer>
+                                                <ErrorMessage name={`emails[${index}]`} component={ErrorField} />
+                                            </ErrorContainer>
 
-</EmailDiv>
+                                        </EmailDiv>
 
                                     ))}
                                 </EmailList>
