@@ -1,7 +1,7 @@
 
 import Button from "../src/components/basic components/button";
 import { Input } from "../src/components/basic components/input/styles";
-import MaskedInput from "../src/components/basic components/maskedinput";
+import { mask, unMask } from 'remask';
 import { Span } from "../src/components/basic components/span/styles";
 import { useAuth } from "../src/hooks/AuthHook";
 import { EmailButtonDiv, AdressSection1, AdressSection2, ButtonDiv, CodeDiv, CpfDiv, EmailList, NameDiv, NewCustomersContent, NumberDiv, PersonalInfoDiv, PhonesContent, PhonesList, RadioGroup, CustomerButtonDiv, ErrorContainer, EmailDiv } from "../src/components/new-customer-form/styles";
@@ -46,19 +46,27 @@ function A(props) {
     const { register, handleSubmit, errors, control } = useForm({
         defaultValues: inicialValues,
     });
-    const { fields: phones, append: appendPhone, remove: removePhone} = useFieldArray({
+    const { fields: phones, append: appendPhone, remove: removePhone } = useFieldArray({
         control,
         name: "phones",
     });
     const { fields: emails, append: appendEmail, remove: removeEmail } = useFieldArray({
-        control,
         name: "emails",
+        control,
+
     })
     const { token } = useAuth();
 
     return (
-        <NewCustomersContent autoComplete="off" onSubmit={handleSubmit(values => {console.log(values) 
-        console.log(inicialValues)})}>
+        <NewCustomersContent autoComplete="off" onSubmit={handleSubmit(values => {
+
+            values.zipCode = unMask(values.zipCode);
+            values.cpf = unMask(values.cpf);
+            values.phones.map((phone, index) => {
+                values.phones[index].stateCode = unMask(values.phones[index].stateCode);
+                values.phones[index].number = unMask(values.phones[index].number);
+            })
+        })}>
             <h1>New Customer</h1>
             <h2>Personal info: </h2>
             <PersonalInfoDiv>
@@ -66,12 +74,18 @@ function A(props) {
                     <Input padding='0.5rem' width='80%' name="name" placeholder="Name*: " ref={register} />
                 </NameDiv>
                 <CpfDiv>
-                    <Input padding='0.5rem' width='80%' name="cpf" placeholder="CPF*: " ref={register} />
+                    <Input padding='0.5rem' width='80%' name="cpf" placeholder="CPF*: " ref={register} onChange={(event) => {
+                        const { value } = event.target;
+                        event.target.value = mask(value, ['999.999.999-99']);
+                    }} />
                 </CpfDiv>
             </PersonalInfoDiv>
             <h2>Address:</h2>
             <AdressSection1>
-                <Input padding='0.5rem' width='25%' name="zipCode" placeholder="CEP*:" ref={register} />
+                <Input padding='0.5rem' width='25%' name="zipCode" placeholder="CEP*:" ref={register} onChange={(event) => {
+                    const { value } = event.target;
+                    event.target.value = mask(value, ['99999-999']);
+                }} />
                 <Input padding='0.5rem' width='80%' name="address" placeholder="Logradouro:*" ref={register} />
                 <Input padding='0.5rem' width='50%' name="complement" placeholder="Complemento:" ref={register} />
             </AdressSection1>
@@ -90,36 +104,43 @@ function A(props) {
                         <PhonesList key={phone.id}>
                             <div>
                                 <CodeDiv>
-                                    <Input padding='0.5rem' width='80%' name={`phones[${index}].stateCode`} placeholder="State Code*: " ref={register()} defaultValue={phone.stateCode}/>
+                                    <Input padding='0.5rem' width='80%' name={`phones[${index}].stateCode`} placeholder="State Code*: " ref={register()} defaultValue={phone.stateCode} onChange={(event) => {
+                                        const { value } = event.target;
+                                        event.target.value = mask(value, ['(99)']);
+                                    }} />
                                 </CodeDiv>
                                 <NumberDiv>
-                                    <Input padding='0.5rem' width='80%' name={`phones[${index}].number`} placeholder="Number*: " ref={register()} defaultValue={phone.number}/>
+                                    <Input padding='0.5rem' width='80%' name={`phones[${index}].number`} placeholder="Number*: " ref={register()} defaultValue={phone.number} onChange={(event) => {
+                                        const { value } = event.target;
+                                        const originalValue = unMask(value);
+                                        event.target.value = mask(originalValue, ['9999-9999', '99999-9999']);
+                                    }} />
                                 </NumberDiv>
                             </div>
                             <RadioGroup>
-                                                <label>
-                                                    <input type="radio" name={`phones[${index}].type`} value={1} ref={register()}/>
-                                                    <div>
-                                                        Residencial
+                                <label>
+                                    <input type="radio" name={`phones[${index}].type`} value={1} ref={register()} />
+                                    <div>
+                                        Residencial
                                                     </div>
-                                                </label>
-                                                <label>
-                                                    <input type="radio" name={`phones[${index}].type`} value={2}  ref={register()}/>
-                                                    <div>
+                                </label>
+                                <label>
+                                    <input type="radio" name={`phones[${index}].type`} value={2} ref={register()} />
+                                    <div>
 
-                                                        Comercial
+                                        Comercial
                                                     </div>
-                                                </label>
-                                                <label>
-                                                    <input type="radio" name={`phones[${index}].type`} value={3} ref={register()}/>
-                                                    <div>
-                                                        Celular
+                                </label>
+                                <label>
+                                    <input type="radio" name={`phones[${index}].type`} value={3} ref={register()} />
+                                    <div>
+                                        Celular
                                                     </div>
-                                                </label>
-                                            </RadioGroup>
-                                            <ButtonDiv>
-                                                <Button width='25%' height='3rem' fontWeight='400' color='red' type="button" onClick={() => removePhone(index)}>Delete Phone</Button>
-                                            </ButtonDiv>
+                                </label>
+                            </RadioGroup>
+                            <ButtonDiv>
+                                <Button width='25%' height='3rem' fontWeight='400' color='red' type="button" onClick={() => removePhone(index)}>Delete Phone</Button>
+                            </ButtonDiv>
                         </PhonesList>
                     );
                 })}
@@ -127,19 +148,19 @@ function A(props) {
             </PhonesContent>
             <h2>E-mails:</h2>
             <EmailList>
-                                    {emails.map((email, index) => (
-                                        <EmailDiv key={email.id}>
-                                            <div>
-                                                <Input padding='0.5rem' width='80%' name={`emails.[${index}]`} placeholder="E-mail*:" ref={register()}/>
-                                                <Button width='25%' height='2.5rem' fontWeight='400' color='red' type="button" onClick={() => removeEmail(index)}>Delete</Button>
-                                            </div>                                  
-                                        </EmailDiv>
+                {emails.map((email, index) => (
+                    <EmailDiv key={email.id}>
+                        <div>
+                            <Input padding='0.5rem' width='80%' name={`emails.[${index}]`} placeholder="E-mail*:" ref={register()} />
+                            <Button width='25%' height='2.5rem' fontWeight='400' color='red' type="button" onClick={() => removeEmail(index)}>Delete</Button>
+                        </div>
+                    </EmailDiv>
 
-                                    ))}
-                                </EmailList>
-                                <EmailButtonDiv>
-                                    <Button width='25%' height='3rem' fontWeight='400' color='#ff9000' type="button" onClick={() => appendEmail([''])}>New E-mail</Button>
-                                </EmailButtonDiv>
+                ))}
+            </EmailList>
+            <EmailButtonDiv>
+                <Button width='25%' height='3rem' fontWeight='400' color='#ff9000' type="button" onClick={() => appendEmail([''])}>New E-mail</Button>
+            </EmailButtonDiv>
             <CustomerButtonDiv>
                 <Button backgroundHover='green' width='40%' height='4rem' fontWeight='400' color='#ff9000' type='submit'>Save Customer</Button>
                 <Button backgroundHover='red' width='40%' height='4rem' fontWeight='400' color='#ff9000' type='submit'>Cancel</Button>
