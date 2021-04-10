@@ -1,5 +1,5 @@
 import { ErrorMessage, Form } from 'formik'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
     export const NewCustomersContent = styled.form`
         flex: 1;
@@ -31,8 +31,16 @@ import styled from 'styled-components'
             display: ${props => props.isvisible && 'none'};
         }
     `
+
+    export const Content = styled.div`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    `
+
     export const PersonalInfoDiv = styled.div`
         display: flex;
+        width: 100%;
         align-items: center;
         margin-bottom: 1rem;    
     `
@@ -51,6 +59,7 @@ import styled from 'styled-components'
 
     export const AdressSection1 = styled.div`        
         display: flex;
+        width: 100%;
         margin-bottom: 0.5rem;
         justify-content: space-around;
         align-items: center;
@@ -64,7 +73,8 @@ import styled from 'styled-components'
     `
 
     export const AdressSection2 = styled.div` 
-            display: fleX;
+            display: flex;
+            width: 100%;
             margin-bottom: 0.5rem;
             justify-content: space-around;
             align-items: center;
@@ -147,6 +157,10 @@ import styled from 'styled-components'
                 width: 100%;
                 height: 100%;
             }
+
+            ${props => props.isErrored && css`
+                border-color: #c40000;
+            `}
     `
 
     export const CodeDiv = styled.div`
@@ -183,19 +197,6 @@ import styled from 'styled-components'
         width: 100%;
         align-items: center;
 
-        div {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background:  #3E3B47;
-            width: 76%;
-            border-radius: 10px;
-
-            & + div {
-                margin-top: 1rem;
-            }
-        }
-
         input{
                 margin-left: 1rem;
                 margin: 1rem;
@@ -203,6 +204,20 @@ import styled from 'styled-components'
 
         button {
             margin: 1rem ;
+        }
+    `
+
+    export const EmailContent = styled.div`
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background:  #3E3B47;
+        width: 76%;
+        border-radius: 10px;
+        margin: 0 auto;
+
+        & + div {
+            margin-top: 1rem;
         }
     `
 

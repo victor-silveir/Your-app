@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 
 export const Input= styled.input`
         color: #ff9000;
@@ -8,4 +8,8 @@ export const Input= styled.input`
         padding: ${props => props.padding};
         border-radius: 0.625rem;
         font-size: 1rem;
+
+        ${props => props.isErrored && css`
+                border-color: #c40000;
+        `}
 `
