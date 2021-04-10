@@ -177,6 +177,7 @@ import styled, { css } from 'styled-components'
         display: flex;
         align-items: center;
     `
+
     export const ButtonDiv = styled.div`
         width: 100%;
 
@@ -199,12 +200,15 @@ import styled, { css } from 'styled-components'
 
         input{
                 margin-left: 1rem;
-                margin: 1rem;
         }
 
         button {
             margin: 1rem ;
         }
+
+        div + div {
+            margin-top: 1rem;
+        }       
     `
 
     export const EmailContent = styled.div`
@@ -215,10 +219,7 @@ import styled, { css } from 'styled-components'
         width: 76%;
         border-radius: 10px;
         margin: 0 auto;
-
-        & + div {
-            margin-top: 1rem;
-        }
+        padding: 1rem 0;
     `
 
     export const EmailButtonDiv = styled.div`
@@ -242,12 +243,4 @@ import styled, { css } from 'styled-components'
             }
     `
 
-    export const ErrorContainer = styled.div`
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        width: 100%;
-        margin-bottom: 1rem;
-    `
-  
+   

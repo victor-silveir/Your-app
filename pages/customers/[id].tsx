@@ -3,7 +3,6 @@ import Background from "../../src/components/basic components/background";
 import { CustomerUpdateCard } from "../../src/components/customer-card";
 import { Header, MobileHeader } from "../../src/components/header";
 import Modal from "../../src/components/modal";
-import NewCustomerForm from "../../src/components/new-customer-form";
 import UpdateCustomerForm from "../../src/components/update-customer-form";
 import { useAuth } from "../../src/hooks/AuthHook";
 import { api} from "../../src/services/axios/api";

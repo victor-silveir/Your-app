@@ -1,15 +1,14 @@
-import { ErrorMessage, Field, FieldArray, Formik } from "formik";
-import React, { useState } from "react";
+
+import Button from "../../components/basic components/button";
+import { Input } from "../../components/basic components/input/styles";
+import { mask, unMask } from 'remask';
+import { Span } from "../../components/basic components/span/styles";
 import { useAuth } from "../../hooks/AuthHook";
-import { customerPost } from "../../services/axios/api";
+import { EmailButtonDiv, AdressSection1, AdressSection2, ButtonDiv, CodeDiv, CpfDiv, EmailList, NameDiv, NewCustomersContent, NumberDiv, PersonalInfoDiv, PhonesContent, PhonesList, RadioGroup, CustomerButtonDiv, EmailDiv, EmailContent, Content } from "./styles";
+import { useFieldArray, useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup'
 import { CustomerSchema } from "../../services/validation/YupSchemas";
-import Button from "../basic components/button";
 import { ErrorField } from "../basic components/ErrorsMessage/styles";
-import { InputField } from "../basic components/input-field/styles";
-import { Input } from "../basic components/input/styles";
-import MaskedInput from "../basic components/maskedinput";
-import { Span } from "../basic components/span/styles";
-import { EmailButtonDiv, AdressSection1, AdressSection2, ButtonDiv, CodeDiv, CpfDiv, EmailList, NameDiv, NewCustomersContent, NumberDiv, PersonalInfoDiv, PhonesContent, PhonesList, RadioGroup, CustomerButtonDiv, ErrorContainer, EmailDiv } from "./styles";
 
 interface CustomerData {
     id?: number;
@@ -44,154 +43,166 @@ const inicialValues: CustomerData = {
     ]
 }
 
-const inicialValues2 = {
-    phones: [{
-        number: "",
-    }],
-    emails: [
-        ''
-    ]
 
-}
 
-function NewCustomerForm(props) {
-   const  phones=['']
+function NewCustomerForm() {
+    const { register, handleSubmit, formState: { errors }, control } = useForm({
+        defaultValues: inicialValues,
+        resolver: yupResolver(CustomerSchema)
+    });
+    const { fields: phones, append: appendPhone, remove: removePhone } = useFieldArray({
+        control,
+        name: "phones",
+    });
+    const { fields: emails, append: appendEmail, remove: removeEmail } = useFieldArray({
+        name: "emails",
+        control,
+
+    })
     const { token } = useAuth();
 
     return (
-        <Formik onSubmit={async (values) => {
-           console.log(values)
-        }} initialValues={inicialValues} >
-            {({ values, errors, touched }) => (
-                <NewCustomersContent autoComplete='off' >
-                    <h1>New Customer</h1>
-                    <h2>Personal Info: </h2>
-                    <PersonalInfoDiv>
-                        <NameDiv>
-                            <InputField padding='0.5rem' width='80%' name="name" placeholder="Name*: " />
-                        </NameDiv>
-                        <CpfDiv>
-                            <InputField padding='0.5rem' width='80%' name="cpf" placeholder="CPF*: " />
-                        </CpfDiv>
-                    </PersonalInfoDiv>
-                    <ErrorContainer>
-                        {touched.name && errors.name && <ErrorField>{errors.name}</ErrorField>}
-                        {touched.cpf && errors.cpf && <ErrorField>{errors.cpf}</ErrorField>}
-                    </ErrorContainer>
-                    <h2>Address:</h2>
-                    <AdressSection1>
-                        <InputField padding='0.5rem' width='25%' name="zipCode" placeholder="CEP*:" />
-                        <InputField padding='0.5rem' width='80%' name="address" placeholder="Logradouro:*" />
-                        <InputField padding='0.5rem' width='50%' name="complement" placeholder="Complemento:" />
-                    </AdressSection1>
-                    <AdressSection2>
-                        <InputField padding='0.5rem' width='50%' name="district" placeholder="Bairro*:" />
-                        <InputField padding='0.5rem' width='50%' name="city" placeholder="Cidade:*" />
-                        <InputField padding='0.5rem' width='25%' name="state" placeholder="Estado*:" />
-                    </AdressSection2>
-                    <ErrorContainer>
-                        {touched.zipCode && errors.zipCode && <ErrorField>{errors.zipCode}</ErrorField>}
-                        {touched.address && errors.address && <ErrorField>{errors.address}</ErrorField>}
-                        {touched.district && errors.district && <ErrorField>{errors.district}</ErrorField>}
-                        {touched.city && errors.city && <ErrorField>{errors.city}</ErrorField>}
-                        {touched.state && errors.state && <ErrorField>{errors.state}</ErrorField>}
-                    </ErrorContainer>
-                    <h2>Phones: </h2>
-                    <Span fontSize={1.2}>Main Phone*:</Span>
-                    <FieldArray name="phones" >
-                        {({ remove, push }) => (
+        <NewCustomersContent autoComplete="off" onSubmit={handleSubmit(values => {
 
-                            <PhonesContent>
-                                {phones.map((phone, index) => {
+            values.zipCode = unMask(values.zipCode);
+            values.cpf = unMask(values.cpf);
+            values.phones.map((phone, index) => {
+                values.phones[index].stateCode = unMask(values.phones[index].stateCode);
+                values.phones[index].number = unMask(values.phones[index].number);
+            })
 
-                                    return (
+            console.log(values);
+        })}>
+            <h1>New Customer</h1>
+            <h2>Personal info: </h2>
+            <Content>
+                <ErrorField>
+                    <div>{errors.name?.message}</div>
+                    <div>{errors.cpf?.message}</div>
+                </ErrorField>
+                <PersonalInfoDiv>
+                    <NameDiv>
+                        <Input padding='0.5rem' width='80%' name="name" placeholder="Name*: " ref={register} isErrored={errors.name} />
+                    </NameDiv>
+                    <CpfDiv>
+                        <Input padding='0.5rem' width='80%' name="cpf" placeholder="CPF*: " ref={register} onChange={(event) => {
+                            const { value } = event.target;
+                            event.target.value = mask(value, ['999.999.999-99']);
+                        }} isErrored={errors.cpf} />
+                    </CpfDiv>
+                </PersonalInfoDiv>
+            </Content>
+            <h2>Address:</h2>
+            <Content>
+                <ErrorField>
+                    <div>{errors.zipCode?.message}</div>
+                    <div>{errors.address?.message}</div>
+                    <div>{errors.district?.message}</div>
+                    <div>{errors.city?.message}</div>
+                    <div>{errors.state?.message}</div>
+                </ErrorField>
+                <AdressSection1>
+                    <Input padding='0.5rem' width='25%' name="zipCode" placeholder="CEP*:" ref={register} onChange={(event) => {
+                        const { value } = event.target;
+                        event.target.value = mask(value, ['99999-999']);
+                    }} isErrored={errors.zipCode} />
+                    <Input padding='0.5rem' width='80%' name="address" placeholder="Logradouro:*" ref={register} isErrored={errors.address} />
+                    <Input padding='0.5rem' width='50%' name="complement" placeholder="Complemento:" ref={register} />
+                </AdressSection1>
+                <AdressSection2>
+                    <Input padding='0.5rem' width='50%' name="district" placeholder="Bairro*:" ref={register} isErrored={errors.district} />
+                    <Input padding='0.5rem' width='50%' name="city" placeholder="Cidade:*" ref={register} isErrored={errors.city} />
+                    <Input padding='0.5rem' width='25%' name="state" placeholder="Estado*:" ref={register} isErrored={errors.state} />
+                </AdressSection2>
+            </Content>
+            <h2>Phones: </h2>
+            <Span fontSize={1.2}>Main Phone*:</Span>
+            <PhonesContent>
+                {phones.map((phone, index) => {
 
-                                        <PhonesList key={index}>
-                                            <div>
-                                                <CodeDiv>
-                                                    <InputField padding='0.5rem' width='80%' name={`phones.${index}.stateCode`} placeholder="State Code*: " />
-                                                </CodeDiv>
-                                                <NumberDiv>
+                    return (
 
-                                                </NumberDiv>
-                                            </div>
-                                            <InputField name={`phones.${index}.number`}>
-                                                {({ field, form }) => {
-                                                    return (<MaskedInput
-                                                        name={`phones.${index}.number`}
-                                                        mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-                                                        id={`phones.${index}.number`}
-                                                        placeholder="Phone Number*:" />)
-                                                    }} 
-                                                    </InputField>
-                                            <RadioGroup>
-                                                <label>
-                                                    <Input type="radio" name={`phones.${index}.type`} value={new Number(1)} checked={values.phones[index].type == new Number(1)} />
-                                                    <div>
-                                                        Residencial
+                        <PhonesList key={phone.id}>
+                            <ErrorField>
+                                <div>{errors.phones?.[index]?.stateCode?.message}</div>
+                                <div>{errors.phones?.[index]?.number?.message}</div>
+                                <div>{errors.phones?.[index]?.type?.message}</div>
+                            </ErrorField>
+                            <div>
+                                <CodeDiv>
+                                    <Input padding='0.5rem' width='80%' name={`phones[${index}].stateCode`} placeholder="State Code*: " ref={register()} defaultValue={phone.stateCode} onChange={(event) => {
+                                        const { value } = event.target;
+                                        const originalValue = unMask(value);
+                                        event.target.value = mask(originalValue, ['(99)']);
+                                    }} isErrored={errors.phones?.[index].stateCode} />
+                                </CodeDiv>
+                                <NumberDiv>
+                                    <Input padding='0.5rem' width='80%' name={`phones[${index}].number`} placeholder="Number*: " ref={register()} defaultValue={phone.number} onChange={(event) => {
+                                        const { value } = event.target;
+                                        const originalValue = unMask(value);
+                                        event.target.value = mask(originalValue, ['9999-9999', '99999-9999']);
+                                    }} isErrored={errors.phones?.[index].number} />
+                                </NumberDiv>
+                            </div>
+                            <RadioGroup isErrored={errors.phones?.[index].type}>
+                                <label>
+                                    <input type="radio" name={`phones[${index}].type`} value={1} ref={register()} />
+                                    <div>
+                                        Residencial
                                                     </div>
-                                                </label>
-                                                <label>
-                                                    <Input type="radio" name={`phones.${index}.type`} value={new Number(2)} checked={values.phones[index].type == new Number(2)} />
-                                                    <div>
+                                </label>
+                                <label>
+                                    <input type="radio" name={`phones[${index}].type`} value={2} ref={register()} />
+                                    <div>
 
-                                                        Comercial
+                                        Comercial
                                                     </div>
-                                                </label>
-                                                <label>
-                                                    <Input type="radio" name={`phones.${index}.type`} value={new Number(3)} checked={values.phones[index].type == new Number(3)} />
-                                                    <div>
-                                                        Celular
+                                </label>
+                                <label>
+                                    <input type="radio" name={`phones[${index}].type`} value={3} ref={register()} />
+                                    <div>
+                                        Celular
                                                     </div>
-                                                </label>
-                                            </RadioGroup>
-                                            <ErrorContainer>
-                                                <ErrorMessage name={`phones[${index}].stateCode`} component={ErrorField} />
-                                                <ErrorMessage name={`phones[${index}].number`} component={ErrorField} />
-                                                <ErrorMessage name={`phones[${index}].type`} component={ErrorField} />
-                                            </ErrorContainer>
-                                            <ButtonDiv>
-                                                <Button width='25%' height='3rem' fontWeight='400' color='red' type="button" onClick={() => remove(index)}>Delete Phone</Button>
-                                            </ButtonDiv>
-                                        </PhonesList>
-                                    )
-                                })}
-                                <Button width='25%' height='3rem' fontWeight='400' color='#ff9000' type="button" onClick={() => push({ stateCode: '', number: '', type: '' })}>New Phone</Button>
-                            </PhonesContent>
-                        )}
-                    </FieldArray>
-                    <h2>E-mails:</h2>
-                    <FieldArray name="emails">
-                        {({ remove, push }) => (
-                            <>
-                                <EmailList>
-                                    {values.emails.map((email, index) => (
-                                        <EmailDiv key={index}>
-                                            <div>
-                                                <InputField padding='0.5rem' width='80%' name={`emails.${index}`} placeholder="E-mail*:" />
-                                                <Button width='25%' height='2.5rem' fontWeight='400' color='red' type="button" onClick={() => remove(index)}>Delete</Button>
-                                            </div>
-                                            <ErrorContainer>
-                                                <ErrorMessage name={`emails[${index}]`} component={ErrorField} />
-                                            </ErrorContainer>
+                                </label>
+                            </RadioGroup>
+                            <ButtonDiv>
+                                <Button width='25%' height='3rem' fontWeight='400' color='red' type="button" onClick={() => removePhone(index)}>Delete Phone</Button>
+                            </ButtonDiv>
+                        </PhonesList>
+                    );
+                })}
+                <Button width='25%' height='3rem' fontWeight='400' color='#ff9000' type="button" onClick={() => appendPhone({ stateCode: '', number: '', type: '1' })}>New Phone</Button>
+            </PhonesContent>
+            <h2>E-mails:</h2>
+            <EmailList>
+                {emails.map((email, index) => {
+                    return (
 
-                                        </EmailDiv>
+                        <EmailDiv key={email.id}>
+                            <EmailContent>
+                                <Content>
+                                <ErrorField>
+                                    <div>{errors.emails?.[index]?.message}</div>
+                                </ErrorField>
+                                <div>
+                                <Input padding='0.5rem' width='80%' name={`emails.[${index}]`} placeholder="E-mail*:" ref={register()} isErrored={errors.emails?.[index]} />
+                                <Button width='25%' height='2.5rem' fontWeight='400' color='red' type="button" onClick={() => removeEmail(index)}>Delete</Button>
+                                </div>
+                                </Content>
+                            </EmailContent>
+                        </EmailDiv>
+                    )
+                })}
+            </EmailList>
+            <EmailButtonDiv>
+                <Button width='25%' height='3rem' fontWeight='400' color='#ff9000' type="button" onClick={() => appendEmail([''])}>New E-mail</Button>
+            </EmailButtonDiv>
+            <CustomerButtonDiv>
+                <Button backgroundHover='green' width='40%' height='4rem' fontWeight='400' color='#ff9000' type='submit'>Save Customer</Button>
+                <Button backgroundHover='red' width='40%' height='4rem' fontWeight='400' color='#ff9000' type='submit'>Cancel</Button>
+            </CustomerButtonDiv>
 
-                                    ))}
-                                </EmailList>
-                                <EmailButtonDiv>
-                                    <Button width='25%' height='3rem' fontWeight='400' color='#ff9000' type="button" onClick={() => push('')}>New E-mail</Button>
-                                </EmailButtonDiv>
-                            </>
-                        )}
-                    </FieldArray>
-                    <CustomerButtonDiv>
-                        <Button backgroundHover='green' width='40%' height='4rem' fontWeight='400' color='#ff9000' type='submit'>Save Customer</Button>
-                        <Button backgroundHover='red' width='40%' height='4rem' fontWeight='400' color='#ff9000' type='submit'>Cancel</Button>
-                    </CustomerButtonDiv>
-                </NewCustomersContent>
-            )}
-        </Formik>
+        </NewCustomersContent>
     );
 };
 
