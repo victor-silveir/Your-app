@@ -22,3 +22,19 @@ export const CustomerSchema = Yup.object().shape({
     })),
     emails: Yup.array().required('At least 1 e-mail is required!').of(Yup.string().required('E-mail is required!').email('Invalid e-mail!'))
 });
+
+export const UpdateCustomerSchema = Yup.object().shape({
+    name: Yup.string().required('Name is required!').min(3, 'At least 3 characters is required!').max(100, 'Maximum of 100 characters'),
+    zipCode: Yup.string().required('Zip Code is required!'),
+    address: Yup.string().required('Address is Required!'),
+    district: Yup.string().required('District is Required!'),
+    city: Yup.string().required('City is Required!'),
+    state: Yup.string().required('State is Required!'),
+    phones: Yup.array().of(
+      Yup.object().shape({
+        stateCode: Yup.string().required('State code is required!'),
+        number: Yup.string().required('Phone number is required!'),
+        type: Yup.string().required('Phone type is required!').nullable()
+    })),
+    emails: Yup.array().required('At least 1 e-mail is required!').of(Yup.string().required('E-mail is required!').email('Invalid e-mail!'))
+});
