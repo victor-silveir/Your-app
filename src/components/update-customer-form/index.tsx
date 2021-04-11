@@ -4,50 +4,16 @@ import { mask, unMask } from 'remask';
 import { Span } from "../../components/basic components/span/styles";
 import { useAuth } from "../../hooks/AuthHook";
 import { EmailButtonDiv, AdressSection1, AdressSection2, ButtonDiv, CodeDiv, CpfDiv, EmailList, NameDiv, NewCustomersContent, NumberDiv, PersonalInfoDiv, PhonesContent, PhonesList, RadioGroup, CustomerButtonDiv, EmailDiv, EmailContent, Content } from "../new-customer-form/styles";
-import { useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup'
-import { CustomerSchema } from "../../services/validation/YupSchemas";
+import { UpdateCustomerSchema } from "../../services/validation/YupSchemas";
 import { ErrorField } from '../../components/basic components/ErrorsMessage/styles'
-
-interface CustomerData {
-    id?: number;
-    name: string;
-    cpf: string;
-    zipCode: string;
-    address: string;
-    complement: string;
-    district: string;
-    city: string;
-    state: string;
-    phones: { stateCode: string, number: string, type: number }[];
-    emails: string[];
-}
-
-const inicialValues: CustomerData = {
-    name: '',
-    cpf: '',
-    zipCode: '',
-    address: '',
-    complement: '',
-    district: '',
-    city: '',
-    state: '',
-    phones: [{
-        stateCode: '',
-        number: '',
-        type: 1
-    }],
-    emails: [
-        ''
-    ]
-}
-
 
 function UpdateCustomerForm(props) {
 
     const { register, handleSubmit, formState: { errors }, control } = useForm({
         defaultValues: props.initialvalues,
-        resolver: yupResolver(CustomerSchema)
+        resolver: yupResolver(UpdateCustomerSchema)
     });
     const { fields: phones, append: appendPhone, remove: removePhone } = useFieldArray({
         control,
@@ -58,19 +24,17 @@ function UpdateCustomerForm(props) {
         control,
 
     })
-    const { token } = useAuth();
 
     return (
         <NewCustomersContent autoComplete="off" isdisabled={props.isdisabled} isvisible={props.isvisible} onSubmit={handleSubmit(values => {
 
             values.zipCode = unMask(values.zipCode);
-            values.cpf = unMask(values.cpf);
-            values.phones.map((phone, index) => {
+            values.cpf = unMask(props.initialvalues.cpf);
+            values.phones.map((_, index) => {
                 values.phones[index].stateCode = unMask(values.phones[index].stateCode);
                 values.phones[index].number = unMask(values.phones[index].number);
             })
 
-            console.log(values);
         })}>
             <h1>New Customer</h1>
             <h2>Personal info: </h2>
@@ -133,32 +97,32 @@ function UpdateCustomerForm(props) {
                                         const { value } = event.target;
                                         const originalValue = unMask(value);
                                         event.target.value = mask(originalValue, ['(99)']);
-                                    }} isErrored={errors.phones?.[index].stateCode} />
+                                    }} isErrored={errors.phones?.[index]?.stateCode?.message} />
                                 </CodeDiv>
                                 <NumberDiv>
                                     <Input padding='0.5rem' width='80%' name={`phones[${index}].number`} placeholder="Number*: " ref={register()} defaultValue={phone.number} onChange={(event) => {
                                         const { value } = event.target;
                                         const originalValue = unMask(value);
                                         event.target.value = mask(originalValue, ['9999-9999', '99999-9999']);
-                                    }} isErrored={errors.phones?.[index].number} />
+                                    }} isErrored={errors.phones?.[index]?.number?.message} />
                                 </NumberDiv>
                             </div>
-                            <RadioGroup isErrored={errors.phones?.[index].type}>
+                            <RadioGroup isErrored={errors.phones?.[index]?.type?.message}>
                                 <label>
-                                    <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value={1} ref={register()} />
+                                    <input type="radio" name={`phones[${index}].type`} value="RESIDENCIAL" ref={register()} defaultChecked={phones[index].type == "RESIDENCIAL"}/>
                                     <div>
                                         Residencial
                                                     </div>
                                 </label>
                                 <label>
-                                    <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value={2} ref={register()} />
+                                    <input type="radio" name={`phones[${index}].type`} value="COMERCIAL" ref={register()} defaultChecked={phones[index].type == "COMERCIAL"}/>
                                     <div>
 
                                         Comercial
                                                     </div>
                                 </label>
                                 <label>
-                                    <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value={3} ref={register()} />
+                                    <input type="radio" name={`phones[${index}].type`} value="CELULAR" ref={register()} defaultChecked={phones[index].type == "CELULAR"}/>
                                     <div>
                                         Celular
                                                     </div>
