@@ -2,9 +2,8 @@ import Button from "../../components/basic components/button";
 import { Input } from "../../components/basic components/input/styles";
 import { mask, unMask } from 'remask';
 import { Span } from "../../components/basic components/span/styles";
-import { useAuth } from "../../hooks/AuthHook";
 import { EmailButtonDiv, AdressSection1, AdressSection2, ButtonDiv, CodeDiv, CpfDiv, EmailList, NameDiv, NewCustomersContent, NumberDiv, PersonalInfoDiv, PhonesContent, PhonesList, RadioGroup, CustomerButtonDiv, EmailDiv, EmailContent, Content } from "../new-customer-form/styles";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup'
 import { UpdateCustomerSchema } from "../../services/validation/YupSchemas";
 import { ErrorField } from '../../components/basic components/ErrorsMessage/styles'
