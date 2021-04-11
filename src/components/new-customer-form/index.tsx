@@ -134,17 +134,17 @@ function NewCustomerForm() {
                                         const { value } = event.target;
                                         const originalValue = unMask(value);
                                         event.target.value = mask(originalValue, ['(99)']);
-                                    }} isErrored={errors.phones?.[index].stateCode} />
+                                    }} isErrored={errors.phones?.[index]?.stateCode?.message} />
                                 </CodeDiv>
                                 <NumberDiv>
                                     <Input padding='0.5rem' width='80%' name={`phones[${index}].number`} placeholder="Number*: " ref={register()} defaultValue={phone.number} onChange={(event) => {
                                         const { value } = event.target;
                                         const originalValue = unMask(value);
                                         event.target.value = mask(originalValue, ['9999-9999', '99999-9999']);
-                                    }} isErrored={errors.phones?.[index].number} />
+                                    }} isErrored={errors.phones?.[index]?.number?.message} />
                                 </NumberDiv>
                             </div>
-                            <RadioGroup isErrored={errors.phones?.[index].type}>
+                            <RadioGroup isErrored={errors.phones?.[index]?.type?.message}>
                                 <label>
                                     <input type="radio" name={`phones[${index}].type`} value={1} ref={register()} />
                                     <div>
