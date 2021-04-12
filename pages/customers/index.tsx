@@ -36,7 +36,7 @@ function Customers() {
             <Header />
             <MobileHeader />
             <Container>
-                <CustomerCard render={handleRender} />
+                <CustomerCard text={isRendered ? "Register new Customer" : "View Customers" } render={handleRender} />
                 {isRendered ? <CustomersList clients={data} />
                     : <NewCustomerForm />
                 }
