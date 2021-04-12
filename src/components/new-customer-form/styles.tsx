@@ -1,4 +1,3 @@
-import { ErrorMessage, Form } from 'formik'
 import styled, { css } from 'styled-components'
 
     export const NewCustomersContent = styled.form`
@@ -242,5 +241,5 @@ import styled, { css } from 'styled-components'
                 }
             }
     `
-
+    
    
