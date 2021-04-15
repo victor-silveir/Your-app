@@ -59,6 +59,11 @@ function AuthProvider({ children }) {
             setData({ token });
 
             Router.replace('/home');
+        }).catch(error => {
+            console.log(error.response.status)
+            if (error.response.status == 401) {
+                alert('Bad credentials, please enter with a valid Username and Password!')
+            }
         });
 
 
