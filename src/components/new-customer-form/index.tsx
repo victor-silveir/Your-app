@@ -3,12 +3,13 @@ import Button from "../../components/basic components/button";
 import { Input } from "../../components/basic components/input/styles";
 import { mask, unMask } from 'remask';
 import { Span } from "../../components/basic components/span/styles";
-import { useAuth } from "../../hooks/AuthHook";
 import { EmailButtonDiv, AdressSection1, AdressSection2, ButtonDiv, CodeDiv, CpfDiv, EmailList, NameDiv, NewCustomersContent, NumberDiv, PersonalInfoDiv, PhonesContent, PhonesList, RadioGroup, CustomerButtonDiv, EmailDiv, EmailContent, Content } from "./styles";
 import { useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup'
 import { CustomerSchema } from "../../services/validation/YupSchemas";
 import { ErrorField } from "../basic components/ErrorsMessage/styles";
+import { api } from "../../services/axios/api";
+import Router from "next/router";
 
 interface CustomerData {
     id?: number;
@@ -59,17 +60,29 @@ function NewCustomerForm() {
         control,
 
     })
-    const { token } = useAuth();
 
     return (
-        <NewCustomersContent autoComplete="off" onSubmit={handleSubmit(values => {
+        <NewCustomersContent autoComplete="off" onSubmit={handleSubmit(async values => {
 
             values.zipCode = unMask(values.zipCode);
             values.cpf = unMask(values.cpf);
             values.phones.map((phone, index) => {
                 values.phones[index].stateCode = unMask(values.phones[index].stateCode);
                 values.phones[index].number = unMask(values.phones[index].number);
-            })
+            });
+
+            await api.post('/clients/', values).then(res =>{
+                Router.reload();
+                alert(`Congratulations! Customer ${values.name} was created!`);
+            }).catch((err) => {
+                if (err.response.data.status == 400) {
+                    alert(err.response.data.errors ? err.response.data.errors[0].message : err.response.data.msg)
+                } else {
+                    Router.reload();
+                    alert(`Ops something went wrong, please try again later!`);
+                }
+        
+            });
 
             console.log(values);
         })}>
@@ -146,20 +159,20 @@ function NewCustomerForm() {
                             </div>
                             <RadioGroup isErrored={errors.phones?.[index]?.type?.message}>
                                 <label>
-                                    <input type="radio" name={`phones[${index}].type`} value={1} ref={register()} />
+                                    <input type="radio" name={`phones[${index}].type`} value={0} ref={register()} />
                                     <div>
                                         Residencial
                                                     </div>
                                 </label>
                                 <label>
-                                    <input type="radio" name={`phones[${index}].type`} value={2} ref={register()} />
+                                    <input type="radio" name={`phones[${index}].type`} value={1} ref={register()} />
                                     <div>
 
                                         Comercial
                                                     </div>
                                 </label>
                                 <label>
-                                    <input type="radio" name={`phones[${index}].type`} value={3} ref={register()} />
+                                    <input type="radio" name={`phones[${index}].type`} value={2} ref={register()} />
                                     <div>
                                         Celular
                                                     </div>
