@@ -18,7 +18,7 @@ export const CustomerSchema = Yup.object().shape({
       Yup.object().shape({
         stateCode: Yup.string().required('State code is required!'),
         number: Yup.string().required('Phone number is required!'),
-        type: Yup.string().required('Phone type is required!').nullable()
+        type: Yup.number().required('Phone type is required!').nullable()
     })),
     emails: Yup.array().required('At least 1 e-mail is required!').of(Yup.string().required('E-mail is required!').email('Invalid e-mail!'))
 });
