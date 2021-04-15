@@ -39,7 +39,6 @@ function UpdateCustomerForm(props) {
            putCustomer<CustomerData>(props.initialvalues.id, values);
 
         })}>
-            <h1>New Customer</h1>
             <h2>Personal info: </h2>
             <Content>
                 <ErrorField>

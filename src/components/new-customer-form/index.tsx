@@ -89,17 +89,17 @@ function NewCustomerForm() {
                     <div>{errors.state?.message}</div>
                 </ErrorField>
                 <AdressSection1>
-                    <Input padding='0.5rem' width='25%' name="zipCode" placeholder="CEP*:" ref={register} onChange={(event) => {
+                    <Input padding='0.5rem' width='25%' name="zipCode" placeholder="Zip Code*:" ref={register} onChange={(event) => {
                         const { value } = event.target;
                         event.target.value = mask(value, ['99999-999']);
                     }} isErrored={errors.zipCode} />
-                    <Input padding='0.5rem' width='80%' name="address" placeholder="Logradouro:*" ref={register} isErrored={errors.address} />
-                    <Input padding='0.5rem' width='50%' name="complement" placeholder="Complemento:" ref={register} />
+                    <Input padding='0.5rem' width='80%' name="address" placeholder="Address:*" ref={register} isErrored={errors.address} />
+                    <Input padding='0.5rem' width='50%' name="complement" placeholder="Complement:" ref={register} />
                 </AdressSection1>
                 <AdressSection2>
-                    <Input padding='0.5rem' width='50%' name="district" placeholder="Bairro*:" ref={register} isErrored={errors.district} />
-                    <Input padding='0.5rem' width='50%' name="city" placeholder="Cidade:*" ref={register} isErrored={errors.city} />
-                    <Input padding='0.5rem' width='25%' name="state" placeholder="Estado*:" ref={register} isErrored={errors.state} />
+                    <Input padding='0.5rem' width='50%' name="district" placeholder="District*:" ref={register} isErrored={errors.district} />
+                    <Input padding='0.5rem' width='50%' name="city" placeholder="City:*" ref={register} isErrored={errors.city} />
+                    <Input padding='0.5rem' width='25%' name="state" placeholder="State*:" ref={register} isErrored={errors.state} />
                 </AdressSection2>
             </Content>
             <h2>Phones: </h2>
@@ -161,6 +161,7 @@ function NewCustomerForm() {
                 <Button width='25%' height='3rem' fontWeight='400' color='#ff9000' type="button" onClick={() => appendPhone({ stateCode: '', number: '', type: '1' })}>New Phone</Button>
             </PhonesContent>
             <h2>E-mails:</h2>
+            <Span fontSize={1.2}>Main E-mail*:</Span>
             <EmailList>
                 {emails.map((email, index) => {
                     return (
