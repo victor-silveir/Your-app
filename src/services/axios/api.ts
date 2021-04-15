@@ -1,5 +1,6 @@
-import axios, { AxiosResponse } from 'axios'
-import UseSWR from 'swr'
+import axios from 'axios'
+import Router from 'next/router';
+import useSWR from 'swr'
 
 interface CustomerData {
     id?: number;
@@ -20,14 +21,44 @@ export const api = axios.create({
     headers: { 'Access-Control-Allow-Origin': '*' }
 });
 
-export function getAllCustomer<Data = any>(url: string, token: string) {
-    const { data, error } = UseSWR<Data>(url, async url => {
+export function useGet<Data = any>(url: string) {
+    const { data, error } = useSWR<Data>(url, async url => {
         const response = await api.get(`${url}`)
 
         const data = response.data;
 
         return data;
-    });
+    }, { revalidateOnFocus: true });
     return { data, error };
 };
+
+export async function putCustomer(id, values) {
+    await api.put(`/clients/${id}`, values).then(() => {
+        Router.reload();
+        alert(`Congratulations! Customer ${values.name} was created!`);
+    }).catch((err) => {
+        if (err.response.data.status == 400) {
+            alert(err.response.data.errors ? err.response.data.errors[0].message : err.response.data.msg)
+        } else {
+            Router.reload();
+            alert(`Ops something went wrong, please try again later!`);
+        }
+
+    });
+}
+
+export async function postCustomer(values) {
+    await api.post(`/clients/`, values).then(() => {
+        Router.reload();
+        alert(`Congratulations! Customer ${values.name} was created!`);
+    }).catch((err) => {
+        if (err.response.data.status == 400) {
+            alert(err.response.data.errors ? err.response.data.errors[0].message : err.response.data.msg)
+        } else {
+            Router.reload();
+            alert(`Ops something went wrong, please try again later!`);
+        }
+
+    });
+}
 
