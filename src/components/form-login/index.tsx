@@ -1,8 +1,5 @@
-import { Formik } from "formik";
-import { InputField } from "../basic components/input-field/styles";
 import { Formlogin } from './styles'
-import { ButtonCustom } from '../basic components/button/styles'
-import { CustomerSchema, LoginSchema } from "../../services/validation/YupSchemas";
+import { LoginSchema } from "../../services/validation/YupSchemas";
 import { useCallback } from "react";
 import { useAuth } from "../../hooks/AuthHook";
 import { Input } from "../basic components/input/styles";
