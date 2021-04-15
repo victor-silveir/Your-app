@@ -17,12 +17,10 @@ function FormLogin({initialData}) {
     });
 
     const handleLogin = useCallback((values) => {
-        console.log(values);
         login({
             userName: values.userName,
             password: values.password
         });
-        console.log(isAuth)
     }, [])
 
     return (

@@ -8,11 +8,13 @@ import Home from "../../pages/home";
 
 interface AuthState {
     token: string;
+    userName: string;
 }
 
 interface AuthContextData {
     isAuth: boolean;
     token: string;
+    userName: string;
     login(credentials: AuthCredentialsModel): Promise<void>;
     logout(): void;
 }
@@ -25,19 +27,20 @@ function AuthProvider({ children }) {
 
         if (process.browser) {
             const token = localStorage.getItem('@YourApp:token');
+            const userName = localStorage.getItem('@YourApp:user');
 
-            if (token) {
+            if (token && userName) {
                 const decodedtoken = jwt.decode(token, { complete: true }).payload.exp;
 
                 const date = new Date().getTime() / 1000;
 
                 if (decodedtoken < date) {
-                    localStorage.removeItem('@YourApp:token')
+                    localStorage.removeItem('@YourApp:token');
+                    localStorage.removeItem('@YourApp:user')
                     return {} as AuthState;
                 } else {
                     api.defaults.headers.Authorization = `Bearer ${token}`
-                    console.log(api.defaults.headers.Authorization)
-                    return { token };
+                    return { token, userName };
                 }
             };
 
@@ -51,12 +54,14 @@ function AuthProvider({ children }) {
             userName,
             password
         }).then((response) => {
+            const jsonData = JSON.parse(response.config.data);
+            const userName = jsonData.userName;
             const token = response.headers[('authorization')].substring(7);
 
             localStorage.setItem('@YourApp:token', token);
+            localStorage.setItem('@YourApp:user', userName);
             api.defaults.headers.Authorization = `Bearer ${token}`
-            console.log(api.defaults.headers.Authorization)
-            setData({ token });
+            setData({ token, userName });
 
             Router.replace('/home');
         }).catch(error => {
@@ -72,13 +77,14 @@ function AuthProvider({ children }) {
     const logout = useCallback(() => {
 
         localStorage.removeItem('@YourApp:token');
+        localStorage.removeItem('@YourApp:user');
 
         Router.reload();
 
     }, [])
 
     return (
-        <AuthContext.Provider value={{ login, isAuth: !!data.token, logout, token: data.token }}>
+        <AuthContext.Provider value={{ login, isAuth: !!data.token, logout, token: data.token, userName: data.userName }}>
             { children}
         </AuthContext.Provider>
     );
