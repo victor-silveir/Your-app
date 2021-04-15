@@ -12,7 +12,6 @@ import { CustomerData } from "../../src/models/CustomerData";
 function Customers() {
 
     const [isRendered, setIsRendered] = useState(true);
-    const { token } = useAuth();
     const { data } = useGet<CustomerData[]>('clients/');
     const handleRender = useCallback(() => {
         setIsRendered(current => !current)

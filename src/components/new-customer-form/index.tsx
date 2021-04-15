@@ -57,9 +57,8 @@ function NewCustomerForm() {
                 values.phones[index].number = unMask(values.phones[index].number);
             });
 
-            postCustomer(values);
+            postCustomer<CustomerData>(values);
 
-            console.log(values);
         })}>
             <h1>New Customer</h1>
             <h2>Personal info: </h2>

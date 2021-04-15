@@ -32,8 +32,23 @@ export function useGet<Data = any>(url: string) {
     return { data, error };
 };
 
-export async function putCustomer(id, values) {
-    await api.put(`/clients/${id}`, values).then(() => {
+export async function putCustomer<Data = any>(id, values) {
+    await api.put<Data>(`/clients/${id}`, values).then(() => {
+        Router.reload();
+        alert(`Congratulations! Customer ${values.name} was updated!`);
+    }).catch((err) => {
+        if (err.response.data.status == 400) {
+            alert(err.response.data.errors ? err.response.data.errors[0].message : err.response.data.msg)
+        } else {
+            Router.reload();
+            alert(`Ops something went wrong, please try again later!`);
+        }
+
+    });
+};
+
+export async function postCustomer<Data = any>(values) {
+    await api.post<Data>(`/clients/`, values).then(() => {
         Router.reload();
         alert(`Congratulations! Customer ${values.name} was created!`);
     }).catch((err) => {
@@ -45,20 +60,5 @@ export async function putCustomer(id, values) {
         }
 
     });
-}
-
-export async function postCustomer(values) {
-    await api.post(`/clients/`, values).then(() => {
-        Router.reload();
-        alert(`Congratulations! Customer ${values.name} was created!`);
-    }).catch((err) => {
-        if (err.response.data.status == 400) {
-            alert(err.response.data.errors ? err.response.data.errors[0].message : err.response.data.msg)
-        } else {
-            Router.reload();
-            alert(`Ops something went wrong, please try again later!`);
-        }
-
-    });
-}
+};
 

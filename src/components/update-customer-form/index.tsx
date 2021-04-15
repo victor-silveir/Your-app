@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { UpdateCustomerSchema } from "../../services/validation/YupSchemas";
 import { ErrorField } from '../../components/basic components/ErrorsMessage/styles'
 import { putCustomer } from "../../services/axios/api";
+import { CustomerData } from "../../models/CustomerData";
 
 function UpdateCustomerForm(props) {
 
@@ -35,7 +36,7 @@ function UpdateCustomerForm(props) {
                 values.phones[index].number = unMask(values.phones[index].number);
             });
 
-           putCustomer(props.initialvalues.id, values);
+           putCustomer<CustomerData>(props.initialvalues.id, values);
 
         })}>
             <h1>New Customer</h1>
