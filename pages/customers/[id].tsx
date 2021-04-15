@@ -11,6 +11,8 @@ import { useGet } from "../../src/services/axios/api";
 import { Container } from "./styles";
 import { mask } from 'remask'
 import { CustomerData } from "../../src/models/CustomerData";
+import  Router  from "next/router";
+import Footer from "../../src/components/footer";
 export async function getServerSideProps(ctx) {
     const { id } = ctx.query;
     return {
@@ -32,7 +34,11 @@ function Customer({ id }) {
             data.phones[index].number = mask(data.phones[index].number, ['9999-9999', '99999-9999'])
         });
     }
-    error && alert(error);
+    
+    if(error?.response.status == 401)  {
+        alert("Session expired, please login again!");
+        Router.reload();
+    };
 
 
     const toggleForm = useCallback(() => {
@@ -56,6 +62,7 @@ function Customer({ id }) {
                 <CustomerUpdateCard enableDelete={toggleDelete} enableUpdate={toggleForm} />
                 <UpdateCustomerForm initialvalues={data} isdisabled={isDisabled ? 1 : 0} isvisible={isDisabled ? 1 : 0} />
             </Container>
+            <Footer />
         </Background>
 
     );

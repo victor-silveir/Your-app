@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
 export const Footr = styled.footer`
-    position: fixed;
+    position: ${props => props.isfixed && 'fixed'};
+    margin-top: 1rem;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -48,5 +49,10 @@ export const SocialIcons = styled.div`
     }
     svg {
         color: #ffffff;
+        transition: 0.5s ease;
+        
+        :hover {
+            color: #ff9000;
+        }
     }
 `

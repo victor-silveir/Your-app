@@ -5,9 +5,9 @@ import NewCustomerForm from "../../src/components/new-customer-form";
 import Background from "../../src/components/basic components/background";
 import { useCallback, useState } from "react";
 import CustomersList from "../../src/components/customers-list";
-import { useAuth } from "../../src/hooks/AuthHook";
 import { useGet } from "../../src/services/axios/api";
 import { CustomerData } from "../../src/models/CustomerData";
+import Footer from "../../src/components/footer";
 
 function Customers() {
 
@@ -27,6 +27,7 @@ function Customers() {
                     : <NewCustomerForm />
                 }
             </Container>
+            <Footer />
         </Background>
     );
 };

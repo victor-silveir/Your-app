@@ -2,9 +2,9 @@ import { Span } from "../basic components/span/styles";
 import { FooterBar, Footr, Profile, ProfileContent, Profilelogo, SocialIcons } from "./styles";
 import { AiFillGithub } from 'react-icons/ai'
 import { FiMail } from 'react-icons/fi'
-function Footer() {
+function Footer(props) {
     return (
-        <Footr>
+        <Footr {...props}>
             <FooterBar>
                 <Profile>
                     <Profilelogo src="https://github.com/victor-silveir.png" />

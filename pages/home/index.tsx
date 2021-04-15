@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Background from "../../src/components/basic components/background/index";
+import Footer from "../../src/components/footer";
 import { Header, MobileHeader } from "../../src/components/header";
 import { Content } from './styles';
 
@@ -15,6 +16,7 @@ function Home() {
                         <br></br>
                         <p>To use the application, go to <a href='/customers'>customers</a> section!</p>
             </Content>
+            <Footer isfixed/>
         </Background>
     )
 };
