@@ -2,15 +2,24 @@ import { Formik } from "formik";
 import { InputField } from "../basic components/input-field/styles";
 import { Formlogin } from './styles'
 import { ButtonCustom } from '../basic components/button/styles'
-import { LoginSchema } from "../../services/validation/YupSchemas";
+import { CustomerSchema, LoginSchema } from "../../services/validation/YupSchemas";
 import { useCallback } from "react";
 import { useAuth } from "../../hooks/AuthHook";
+import { Input } from "../basic components/input/styles";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ErrorField } from "../basic components/ErrorsMessage/styles";
+import Button from "../basic components/button";
 
 function FormLogin({initialData}) {
 
     const {isAuth, login} = useAuth();
+    const { register, handleSubmit, formState: { errors }, control } = useForm({
+        defaultValues: initialData,
+        resolver: yupResolver(LoginSchema)
+    });
 
-    const Login = useCallback((values) => {
+    const handleLogin = useCallback((values) => {
         console.log(values);
         login({
             userName: values.userName,
@@ -20,20 +29,26 @@ function FormLogin({initialData}) {
     }, [])
 
     return (
-        <Formik initialValues={initialData} onSubmit={Login} validationSchema={LoginSchema}>
-            {({ errors, touched }) => (
-            <Formlogin>
+        
+            <Formlogin  autoComplete="off" onSubmit={handleSubmit(handleLogin)}>
             <img src="/img/Hourglass.svg"/>
             <h3>YourApp - An app to CRUD</h3>
             <h1>Login</h1>
-                <InputField name='userName' placeholder="Username: " padding="1rem"/>
-                {touched.userName && errors.userName && <div>{errors.userName}</div>}
-                <InputField name='password' placeholder="Password: " padding="1rem"/>
-                {touched.password && errors.password && <div>{errors.password}</div>}
-                <ButtonCustom type="submit">Login</ButtonCustom>
+                <Input name='userName' placeholder="Username: " padding="1rem" ref={register} isErrored={errors?.userName}/>
+                {errors?.userName &&
+                <ErrorField>
+                    <div>{errors.userName?.message}</div>
+                </ErrorField>
+                }
+                <Input name='password' type="password" placeholder="Password: " padding="1rem" ref={register} isErrored={errors?.password}/>
+               {errors?.password &&
+                   <ErrorField>
+                    <div>{errors.password?.message}</div>
+                </ErrorField>
+                }
+                <Button backgroundHover="#ff9000" type="submit">Login</Button>
             </Formlogin>
-            )}
-        </Formik>
+
     );
 };
 
