@@ -10,20 +10,7 @@ import { CustomerSchema } from "../../services/validation/YupSchemas";
 import { ErrorField } from "../basic components/ErrorsMessage/styles";
 import { api } from "../../services/axios/api";
 import Router from "next/router";
-
-interface CustomerData {
-    id?: number;
-    name: string;
-    cpf: string;
-    zipCode: string;
-    address: string;
-    complement: string;
-    district: string;
-    city: string;
-    state: string;
-    phones: { stateCode: string, number: string, type: number }[];
-    emails: string[];
-}
+import { CustomerData } from "../../models/CustomerData";
 
 const inicialValues: CustomerData = {
     name: '',

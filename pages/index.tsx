@@ -1,15 +1,11 @@
 import Background from "../src/components/basic components/background/index";
 import FormLogin from "../src/components/form-login";
 import styled from 'styled-components'
-import { useAuth } from "../src/hooks/AuthHook";
-import { useCallback } from "react";
+import { AuthCredentialsModel } from "../src/models/AuthCredentialsModel";
 
-interface UserCreds {
-  userName: string,
-  password: string
-}
 
-const initialData: UserCreds = {
+
+const initialData: AuthCredentialsModel = {
   userName: '',
   password: ''
 }
@@ -33,8 +29,6 @@ const Content = styled.div`
 
 
 export default function LoginPage() {
-
-  const { login, isAuth } = useAuth();
 
   return (
     <Container>
