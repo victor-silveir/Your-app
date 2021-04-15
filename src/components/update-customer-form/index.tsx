@@ -108,20 +108,20 @@ function UpdateCustomerForm(props) {
                             </div>
                             <RadioGroup isErrored={errors.phones?.[index]?.type?.message}>
                                 <label>
-                                    <input type="radio" name={`phones[${index}].type`} value="RESIDENCIAL" ref={register()} defaultChecked={phones[index].type == "RESIDENCIAL"}/>
+                                    <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value="RESIDENCIAL" ref={register()} defaultChecked={phones[index].type == "RESIDENCIAL"}/>
                                     <div>
                                         Residencial
                                                     </div>
                                 </label>
                                 <label>
-                                    <input type="radio" name={`phones[${index}].type`} value="COMERCIAL" ref={register()} defaultChecked={phones[index].type == "COMERCIAL"}/>
+                                    <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value="COMERCIAL" ref={register()} defaultChecked={phones[index].type == "COMERCIAL"}/>
                                     <div>
 
                                         Comercial
                                                     </div>
                                 </label>
                                 <label>
-                                    <input type="radio" name={`phones[${index}].type`} value="CELULAR" ref={register()} defaultChecked={phones[index].type == "CELULAR"}/>
+                                    <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value="CELULAR" ref={register()} defaultChecked={phones[index].type == "CELULAR"}/>
                                     <div>
                                         Celular
                                                     </div>
