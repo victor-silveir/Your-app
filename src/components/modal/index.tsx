@@ -1,8 +1,16 @@
+import { useCallback } from 'react';
+import { deleteCustomer } from '../../services/axios/api';
 import Button from '../basic components/button';
 import { Input } from '../basic components/input/styles';
 import { ModalContainer, ModalContent, ModalItens, ModalButtons } from './styles'
 
 function Modal({openModal, client}, props) {
+
+    const handleDelete = useCallback(() => {
+        console.log(client)
+        deleteCustomer(client.id, client);
+    }, [])
+
     return (
         <ModalContainer {...props}>
             <ModalContent>
@@ -16,7 +24,7 @@ function Modal({openModal, client}, props) {
                     <Input padding='1rem' width='85%' name="CPF" value={client.cpf} disabled={true} />
                 </ModalItens>
                 <ModalButtons>
-                    <Button backgroundHover='red' color='#232129' type="button" onClick={() => { }}>Delete</Button>
+                    <Button backgroundHover='red' color='#232129' type="button" onClick={handleDelete}>Delete</Button>
                     <Button color='#232129' type="button" onClick={openModal}>Cancel</Button>
                 </ModalButtons>
             </ModalContent>
