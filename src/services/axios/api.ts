@@ -1,5 +1,4 @@
-import axios from 'axios'
-import { url } from 'node:inspector';
+import axios, { AxiosResponse } from 'axios'
 import UseSWR from 'swr'
 
 interface CustomerData {
@@ -21,16 +20,6 @@ export const api = axios.create({
     headers: { 'Access-Control-Allow-Origin': '*' }
 });
 
-export async function customerPost(data: CustomerData, token) {
-    await api.post('/clients/', data).catch((err) => {
-
-        if (err.response.data.status == 400) {
-            alert(err.response.data.errors ? err.response.data.errors[0].message : err.response.data.msg)
-        }
-
-    });
-};
-
 export function getAllCustomer<Data = any>(url: string, token: string) {
     const { data, error } = UseSWR<Data>(url, async url => {
         const response = await api.get(`${url}`)
@@ -42,6 +31,3 @@ export function getAllCustomer<Data = any>(url: string, token: string) {
     return { data, error };
 };
 
-export async function getCustomerById(id) {
-    await api.get(`clients/${id}`)
-}
