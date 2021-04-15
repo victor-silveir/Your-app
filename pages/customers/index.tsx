@@ -6,37 +6,24 @@ import Background from "../../src/components/basic components/background";
 import { useCallback, useState } from "react";
 import CustomersList from "../../src/components/customers-list";
 import { useAuth } from "../../src/hooks/AuthHook";
-import { getAllCustomer } from "../../src/services/axios/api";
-
-interface CustomerData {
-    id?: number;
-    name: string;
-    cpf: string;
-    zipCode: string;
-    address: string;
-    complement: string;
-    district: string;
-    city: string;
-    state: string;
-    phones: { stateCode: string, number: string, type: number }[];
-    emails: string[];
-}
+import { useGet } from "../../src/services/axios/api";
+import { CustomerData } from "../../src/models/CustomerData";
 
 function Customers() {
-    
+
     const [isRendered, setIsRendered] = useState(true);
-    const{token} = useAuth();
-    const{data, error} = getAllCustomer<CustomerData[]>('clients/', token);
+    const { token } = useAuth();
+    const { data } = useGet<CustomerData[]>('clients/');
     const handleRender = useCallback(() => {
         setIsRendered(current => !current)
     }, [])
-    
+
     return (
         <Background fixed backgroundImage='/img/background2.jpg'>
             <Header />
             <MobileHeader />
             <Container>
-                <CustomerCard text={isRendered ? "Register new Customer" : "View Customers" } render={handleRender} />
+                <CustomerCard text={isRendered ? "Register new Customer" : "View Customers"} render={handleRender} />
                 {isRendered ? <CustomersList clients={data} />
                     : <NewCustomerForm />
                 }

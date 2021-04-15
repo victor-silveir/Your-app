@@ -8,8 +8,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup'
 import { CustomerSchema } from "../../services/validation/YupSchemas";
 import { ErrorField } from "../basic components/ErrorsMessage/styles";
-import { api } from "../../services/axios/api";
-import Router from "next/router";
+import { postCustomer } from "../../services/axios/api";
 import { CustomerData } from "../../models/CustomerData";
 
 const inicialValues: CustomerData = {
@@ -58,18 +57,7 @@ function NewCustomerForm() {
                 values.phones[index].number = unMask(values.phones[index].number);
             });
 
-            await api.post('/clients/', values).then(res =>{
-                Router.reload();
-                alert(`Congratulations! Customer ${values.name} was created!`);
-            }).catch((err) => {
-                if (err.response.data.status == 400) {
-                    alert(err.response.data.errors ? err.response.data.errors[0].message : err.response.data.msg)
-                } else {
-                    Router.reload();
-                    alert(`Ops something went wrong, please try again later!`);
-                }
-        
-            });
+            postCustomer(values);
 
             console.log(values);
         })}>

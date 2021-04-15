@@ -7,6 +7,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup'
 import { UpdateCustomerSchema } from "../../services/validation/YupSchemas";
 import { ErrorField } from '../../components/basic components/ErrorsMessage/styles'
+import { putCustomer } from "../../services/axios/api";
 
 function UpdateCustomerForm(props) {
 
@@ -25,14 +26,16 @@ function UpdateCustomerForm(props) {
     })
 
     return (
-        <NewCustomersContent autoComplete="off" isdisabled={props.isdisabled} isvisible={props.isvisible} onSubmit={handleSubmit(values => {
+        <NewCustomersContent autoComplete="off" isdisabled={props.isdisabled} isvisible={props.isvisible} onSubmit={handleSubmit(async values => {
 
             values.zipCode = unMask(values.zipCode);
             values.cpf = unMask(props.initialvalues.cpf);
             values.phones.map((_, index) => {
                 values.phones[index].stateCode = unMask(values.phones[index].stateCode);
                 values.phones[index].number = unMask(values.phones[index].number);
-            })
+            });
+
+           putCustomer(props.initialvalues.id, values);
 
         })}>
             <h1>New Customer</h1>
@@ -108,20 +111,20 @@ function UpdateCustomerForm(props) {
                             </div>
                             <RadioGroup isErrored={errors.phones?.[index]?.type?.message}>
                                 <label>
-                                    <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value="RESIDENCIAL" ref={register()} defaultChecked={phones[index].type == "RESIDENCIAL"}/>
+                                    <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value="RESIDENCIAL" ref={register()} defaultChecked={phones[index].type == "RESIDENCIAL"} />
                                     <div>
                                         Residencial
                                                     </div>
                                 </label>
                                 <label>
-                                    <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value="COMERCIAL" ref={register()} defaultChecked={phones[index].type == "COMERCIAL"}/>
+                                    <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value="COMERCIAL" ref={register()} defaultChecked={phones[index].type == "COMERCIAL"} />
                                     <div>
 
                                         Comercial
                                                     </div>
                                 </label>
                                 <label>
-                                    <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value="CELULAR" ref={register()} defaultChecked={phones[index].type == "CELULAR"}/>
+                                    <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value="CELULAR" ref={register()} defaultChecked={phones[index].type == "CELULAR"} />
                                     <div>
                                         Celular
                                                     </div>
@@ -143,13 +146,13 @@ function UpdateCustomerForm(props) {
                         <EmailDiv key={email.id}>
                             <EmailContent>
                                 <Content>
-                                <ErrorField>
-                                    <div>{errors.emails?.[index]?.message}</div>
-                                </ErrorField>
-                                <div>
-                                <Input padding='0.5rem' width='80%' name={`emails.[${index}]`} placeholder="E-mail*:" ref={register()} isErrored={errors.emails?.[index]} />
-                                <Button width='25%' height='2.5rem' fontWeight='400' color='red' type="button" onClick={() => removeEmail(index)}>Delete</Button>
-                                </div>
+                                    <ErrorField>
+                                        <div>{errors.emails?.[index]?.message}</div>
+                                    </ErrorField>
+                                    <div>
+                                        <Input padding='0.5rem' width='80%' name={`emails.[${index}]`} placeholder="E-mail*:" ref={register()} isErrored={errors.emails?.[index]} />
+                                        <Button width='25%' height='2.5rem' fontWeight='400' color='red' type="button" onClick={() => removeEmail(index)}>Delete</Button>
+                                    </div>
                                 </Content>
                             </EmailContent>
                         </EmailDiv>
