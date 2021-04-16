@@ -9,8 +9,17 @@ export const Formlogin = styled.form`
     align-items: center;
 
     input {
+        @media(max-width: 400px){
+            width: 80%;
+        }
         & + input {
             margin-top: 0.5rem;
+        }
+    }
+
+    button {
+        @media(max-width: 400px){
+            width: 80%;
         }
     }
 

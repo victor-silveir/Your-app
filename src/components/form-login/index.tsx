@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorField } from "../basic components/ErrorsMessage/styles";
 import Button from "../basic components/button";
+import { motion } from 'framer-motion';
 
 function FormLogin({initialData}) {
 
@@ -28,7 +29,7 @@ function FormLogin({initialData}) {
             <Formlogin  autoComplete="off" onSubmit={handleSubmit(handleLogin)}>
             <img src="/img/Hourglass.svg"/>
             <h3>YourApp - An app to CRUD</h3>
-            <h1>Login</h1>
+            <motion.h1 animate={{ color: "#ff9000" }} transition={{ duration: 1 }}>Sign in</motion.h1>
                 <Input name='userName' placeholder="Username: " padding="1rem" ref={register} isErrored={errors?.userName}/>
                 {errors?.userName &&
                 <ErrorField>

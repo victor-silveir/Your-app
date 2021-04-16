@@ -24,7 +24,10 @@ const Content = styled.div`
   align-items: center;
   place-content: center;
   width: 100%;
-  max-width: 40rem;
+  margin: 0rem 1rem;
+  max-width: 30rem;
+
+ 
 `
 
 

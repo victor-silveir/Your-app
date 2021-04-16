@@ -17,7 +17,7 @@ function Footer(props) {
                         <a href="mailto:vbf.silveira@gmail.com">
                         <FiMail size={25}/>
                         </a>
-                        <a href="https://github.com/victor-silveir/CRUD-Spring-Next.Js-Frontend">   
+                        <a href="https://github.com/victor-silveir">   
                         <AiFillGithub size={25} />
                         </a>
                     </SocialIcons>
