@@ -8,6 +8,13 @@ export const NavContainer = styled.div`
     justify-content: space-space-between;
     width: 100%;
     align-items: center;
+    z-index: 999999;
+
+    svg {
+        text-decoration: none;
+        color: #ffffff;
+        margin-bottom: 2rem;
+    }
 `
 
 export const NavList = styled.ul`
@@ -28,6 +35,7 @@ export const Navlink = styled.li`
     
     a {
         text-decoration: none;
+        color: #ffffff;
     }
 
     & + li {

@@ -6,6 +6,11 @@ export const Footr = styled.footer`
     left: 0;
     bottom: 0;
     width: 100%;
+    z-index: -1;
+
+    @media(max-width: 450px) {
+        width: 150%;
+    }
 `
 export const FooterBar = styled.div`
     margin: 0 auto;
@@ -22,6 +27,11 @@ export const Profile = styled.div`
     margin: 2rem 1.5rem;
     display: flex;
     align-items: center;      
+
+    @media(max-width: 31rem) {
+        flex: 1;
+        width: 100%;
+    }
 `
 export const Profilelogo = styled.img`
     width: 6.5rem;
@@ -56,6 +66,11 @@ export const SocialIcons = styled.div`
     display: flex;
     align-items: center;
     margin: auto 2rem;
+
+    @media(max-width: 31rem) {
+        display: none;
+    } 
+
     a {
         width: 100%;
         text-decoration: none;

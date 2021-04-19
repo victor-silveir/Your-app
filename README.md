@@ -1,6 +1,6 @@
 ## Descrição do projeto:
  
-Interface da aplicação YourApp, uma aplicação para realizar cadastro, deleção e atualização de clientes utilizando autenticação de usuários.
+Interface da aplicação YourApp, uma aplicação para realizar cadastro, deleção e atualização de clientes utilizando autenticação de usuários. O design desse projeto foi desenvolvido por mim e baseado em outras aplicações como por exemplo paleta de cores inspirada na aplicação GoBarber da Rocketseat.
 
 Sumário
 =================

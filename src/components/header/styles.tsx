@@ -5,7 +5,7 @@ export const Headr = styled.header`
     margin-bottom: 2rem;
     position: sticky;
 
-    @media(max-width: 45rem) {
+    @media(max-width: 31rem) {
         display: none;
     }
 `;
@@ -16,7 +16,7 @@ export const MHeadr = styled.header`
     position: sticky;
     display: none;
 
-    @media(max-width: 45rem) {
+    @media(max-width: 31rem) {
         display: flex;
     }
 
