@@ -1,5 +1,4 @@
 import { CustomerCard } from "../../src/components/customer-card";
-import { Container } from "./styles";
 import { Header, MobileHeader } from "../../src/components/header";
 import NewCustomerForm from "../../src/components/new-customer-form";
 import Background from "../../src/components/basic components/background";
@@ -9,6 +8,25 @@ import { useGet } from "../../src/services/axios/api";
 import { CustomerData } from "../../src/models/CustomerData";
 import Footer from "../../src/components/footer";
 import { useAuth } from "../../src/hooks/AuthHook";
+import styled from 'styled-components'
+
+const Container = styled.div`
+    max-width: 90rem;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    place-content: center;
+    margin: 0 auto;
+
+    @media(max-width: 45rem) {
+        width: 150%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+`
 
 function Customers() {
 

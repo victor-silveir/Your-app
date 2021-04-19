@@ -8,12 +8,31 @@ const UpdateCustomerForm = dynamic(
     () => import("../../src/components/update-customer-form"),
     { ssr: false })
 import { useGet } from "../../src/services/axios/api";
-import { Container } from "./styles";
 import { mask } from 'remask'
 import { CustomerData } from "../../src/models/CustomerData";
 import  Router  from "next/router";
 import Footer from "../../src/components/footer";
 import { useAuth } from "../../src/hooks/AuthHook";
+import styled from 'styled-components'
+
+const Container = styled.div`
+    max-width: 90rem;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    place-content: center;
+    margin: 0 auto;
+
+    @media(max-width: 45rem) {
+        width: 150%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+`
+
 export async function getServerSideProps(ctx) {
     const { id } = ctx.query;
     return {
