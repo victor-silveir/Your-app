@@ -3,7 +3,7 @@ import Button from "../../components/basic components/button";
 import { Input } from "../../components/basic components/input/styles";
 import { mask, unMask } from 'remask';
 import { Span } from "../../components/basic components/span/styles";
-import { EmailButtonDiv, AdressSection1, AdressSection2, ButtonDiv, CodeDiv, CpfDiv, EmailList, NameDiv, NewCustomersContent, NumberDiv, PersonalInfoDiv, PhonesContent, PhonesList, RadioGroup, CustomerButtonDiv, EmailDiv, EmailContent, Content } from "./styles";
+import { EmailButtonDiv, AdressSection1, AdressSection2, ButtonDiv, CodeDiv, CpfDiv, EmailList, NameDiv, NewCustomersContent, NumberDiv, PersonalInfoDiv, PhonesContent, PhonesList, RadioGroup, CustomerButtonDiv, EmailDiv, EmailContent, Content, RadioDiv } from "./styles";
 import { useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup'
 import { CustomerSchema } from "../../services/validation/YupSchemas";
@@ -131,6 +131,8 @@ function NewCustomerForm() {
                                     }} isErrored={errors.phones?.[index]?.number?.message} />
                                 </NumberDiv>
                             </div>
+                            <RadioDiv>
+                            <label>Phone type*: </label>
                             <RadioGroup isErrored={errors.phones?.[index]?.type?.message}>
                                 <label>
                                     <input type="radio" name={`phones[${index}].type`} value={0} ref={register()} />
@@ -152,6 +154,7 @@ function NewCustomerForm() {
                                                     </div>
                                 </label>
                             </RadioGroup>
+                            </RadioDiv>
                             <ButtonDiv>
                                 <Button width='25%' height='3rem' fontWeight='400' color='red' type="button" onClick={() => removePhone(index)}>Delete Phone</Button>
                             </ButtonDiv>

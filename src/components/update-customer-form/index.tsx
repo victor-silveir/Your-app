@@ -2,7 +2,7 @@ import Button from "../../components/basic components/button";
 import { Input } from "../../components/basic components/input/styles";
 import { mask, unMask } from 'remask';
 import { Span } from "../../components/basic components/span/styles";
-import { EmailButtonDiv, AdressSection1, AdressSection2, ButtonDiv, CodeDiv, CpfDiv, EmailList, NameDiv, NewCustomersContent, NumberDiv, PersonalInfoDiv, PhonesContent, PhonesList, RadioGroup, CustomerButtonDiv, EmailDiv, EmailContent, Content } from "../new-customer-form/styles";
+import { EmailButtonDiv, AdressSection1, AdressSection2, ButtonDiv, CodeDiv, CpfDiv, EmailList, NameDiv, NewCustomersContent, NumberDiv, PersonalInfoDiv, PhonesContent, PhonesList, RadioGroup, CustomerButtonDiv, EmailDiv, EmailContent, Content, RadioDiv } from "../new-customer-form/styles";
 import { useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup'
 import { UpdateCustomerSchema } from "../../services/validation/YupSchemas";
@@ -36,7 +36,7 @@ function UpdateCustomerForm(props) {
                 values.phones[index].number = unMask(values.phones[index].number);
             });
 
-           putCustomer<CustomerData>(props.initialvalues.id, values);
+            putCustomer<CustomerData>(props.initialvalues.id, values);
 
         })}>
             <h2>Personal info: </h2>
@@ -109,27 +109,30 @@ function UpdateCustomerForm(props) {
                                     }} isErrored={errors.phones?.[index]?.number?.message} />
                                 </NumberDiv>
                             </div>
-                            <RadioGroup isErrored={errors.phones?.[index]?.type?.message}>
-                                <label>
-                                    <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value="RESIDENCIAL" ref={register()} defaultChecked={phones[index].type == "RESIDENCIAL"} />
-                                    <div>
-                                        Residencial
+                            <RadioDiv>
+                                <label>Phone Type*: </label>
+                                <RadioGroup isErrored={errors.phones?.[index]?.type?.message}>
+                                    <label>
+                                        <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value="RESIDENCIAL" ref={register()} defaultChecked={phones[index].type == "RESIDENCIAL"} />
+                                        <div>
+                                            Residencial
                                                     </div>
-                                </label>
-                                <label>
-                                    <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value="COMERCIAL" ref={register()} defaultChecked={phones[index].type == "COMERCIAL"} />
-                                    <div>
+                                    </label>
+                                    <label>
+                                        <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value="COMERCIAL" ref={register()} defaultChecked={phones[index].type == "COMERCIAL"} />
+                                        <div>
 
-                                        Comercial
+                                            Comercial
                                                     </div>
-                                </label>
-                                <label>
-                                    <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value="CELULAR" ref={register()} defaultChecked={phones[index].type == "CELULAR"} />
-                                    <div>
-                                        Celular
+                                    </label>
+                                    <label>
+                                        <input disabled={props.isdisabled} type="radio" name={`phones[${index}].type`} value="CELULAR" ref={register()} defaultChecked={phones[index].type == "CELULAR"} />
+                                        <div>
+                                            Celular
                                                     </div>
-                                </label>
-                            </RadioGroup>
+                                    </label>
+                                </RadioGroup>
+                            </RadioDiv>
                             <ButtonDiv>
                                 <Button width='25%' height='3rem' fontWeight='400' color='red' type="button" onClick={() => removePhone(index)}>Delete Phone</Button>
                             </ButtonDiv>

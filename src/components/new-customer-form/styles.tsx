@@ -123,7 +123,7 @@ import styled, { css } from 'styled-components'
         display: flex;
         align-items: center;
         border: solid 3px #232129;
-        margin-top: 2rem;
+        margin-top: 0.5rem;
         border-radius: 5px;
 
 
@@ -240,6 +240,14 @@ import styled, { css } from 'styled-components'
                     margin-left: 1rem;
                 }
             }
+    `
+
+    export const RadioDiv = styled.div`
+        display: flex;
+        flex-direction: column;
+        margin: 1rem auto;
+        
+
     `
     
    

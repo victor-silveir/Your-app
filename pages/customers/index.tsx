@@ -33,7 +33,6 @@ function Customers() {
     const [isRendered, setIsRendered] = useState(true);
     const [isAdmin, setIsAdmin] = useState(true);
     const { userName } = useAuth();
-    console.log(userName);
     const { data } = useGet<CustomerData[]>('clients/');
     const handleRender = useCallback(() => {
         setIsRendered(current => !current)
