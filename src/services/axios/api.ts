@@ -3,7 +3,7 @@ import Router from 'next/router';
 import useSWR from 'swr'
 
 export const api = axios.create({
-    baseURL: 'http://localhost:8080/',
+    baseURL: ' https://your-app-backend.herokuapp.com/',
     headers: { 'Access-Control-Allow-Origin': '*' }
 });
 
