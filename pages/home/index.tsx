@@ -76,7 +76,7 @@ function Home() {
                     <br></br>
                     <p>To use the application, go to <a href='/customers'>customers</a> section!</p>
                 </Content>
-                <Footer isfixed />
+                <Footer isfixed/>
             </Background>
         </>
     )

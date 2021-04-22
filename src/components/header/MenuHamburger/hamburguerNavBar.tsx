@@ -22,8 +22,8 @@ function HamburgerNavBar() {
                     <a href="/customers">Customers</a>
                 </Navlink>
             </NavList>
-            <a href="/customers"><AiFillGithub size={25} /></a>
-            <a href="/customers"><FiMail size={25} /></a>
+            <a href="https://github.com/victor-silveir"><AiFillGithub size={25} /></a>
+            <a href="mailto:vbf.silveira@gmail.com"><FiMail size={25} /></a>
             <a onClick={logout}>Logout</a>
         </NavContainer>
     );
