@@ -9,8 +9,8 @@ const GlobalStyle = createGlobalStyle`
       margin: 0;
       box-sizing: border-box;
       -webkit-font-smooth: antialiased;
-      font-family: 'Libre Baskerville', serif;
-    }
+      font-family: 'Arimo', sans-serif;    }
+      
     body {
       width: 100%;
       height: 100vh;

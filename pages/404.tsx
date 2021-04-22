@@ -3,6 +3,7 @@ import Background from "../src/components/basic components/background";
 import Footer from "../src/components/footer";
 import { Header, MobileHeader } from "../src/components/header";
 import styled from 'styled-components'
+import Head from "../src/infra/head";
 
 const Content = styled.div`
     overflow-x: hidden;
@@ -63,17 +64,20 @@ const Content = styled.div`
 
 function notFound() {
     return (
-        <Background fixed backgroundImage='/img/background2.jpg'>
-            <Header />
-            <MobileHeader />
-            <Content>
-                <motion.h1 animate={{ color: "#ff9000" }} transition={{ duration: 1 }}>404 - Page Not Found!</motion.h1>
-                <h2>We can't find the page that you are looking for  </h2>
-                <br></br>
-                <h2>Return <a href='/home'>Home</a> !</h2>
-            </Content>
-            <Footer />
-        </Background>
+        <>
+            <Head title="YourApp | 404" />
+            <Background fixed backgroundImage='/img/background2.jpg'>
+                <Header />
+                <MobileHeader />
+                <Content>
+                    <motion.h1 animate={{ color: "#ff9000" }} transition={{ duration: 1 }}>404 - Page Not Found!</motion.h1>
+                    <h2>We can't find the page that you are looking for  </h2>
+                    <br></br>
+                    <h2>Return <a href='/home'>Home</a> !</h2>
+                </Content>
+                <Footer />
+            </Background>
+        </>
     )
 };
 

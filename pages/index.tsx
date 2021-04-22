@@ -2,6 +2,7 @@ import Background from "../src/components/basic components/background/index";
 import FormLogin from "../src/components/form-login";
 import styled from 'styled-components'
 import { AuthCredentialsModel } from "../src/models/AuthCredentialsModel";
+import Head from "../src/infra/head";
 
 
 
@@ -34,11 +35,14 @@ const Content = styled.div`
 export default function LoginPage() {
 
   return (
+    <>
+    <Head title="YourApp | Login" />
     <Container>
       <Content>
         <FormLogin initialData={initialData} />
       </Content>
       <Background backgroundImage='/img/background2.jpg'/>
     </Container>
+    </>
   )
 };

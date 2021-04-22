@@ -9,6 +9,7 @@ import { CustomerData } from "../../src/models/CustomerData";
 import Footer from "../../src/components/footer";
 import { useAuth } from "../../src/hooks/AuthHook";
 import styled from 'styled-components'
+import Head from "../../src/infra/head";
 
 const Container = styled.div`
     max-width: 90rem;
@@ -37,7 +38,7 @@ function Customers() {
     const handleRender = useCallback(() => {
         setIsRendered(current => !current)
     }, [])
-    
+
     useEffect(() => {
         if (userName == "comum") {
             setIsAdmin(false);
@@ -45,18 +46,21 @@ function Customers() {
     }, [])
 
     return (
-        <Background fixed backgroundImage='/img/background2.jpg'>
-            <Header />
-            <MobileHeader />
-            <Container>
-                {isAdmin && <CustomerCard text={isRendered ? "Register new Customer" : "View Customers"} render={handleRender} />
-                }
-                {isRendered ? <CustomersList clients={data} />
-                    : <NewCustomerForm />
-                }
-            </Container>
-            <Footer ismobilefixed/>
-        </Background>
+        <>
+            <Head title="YourApp | Customers" />
+            <Background fixed backgroundImage='/img/background2.jpg'>
+                <Header />
+                <MobileHeader />
+                <Container>
+                    {isAdmin && <CustomerCard text={isRendered ? "Register new Customer" : "View Customers"} render={handleRender} />
+                    }
+                    {isRendered ? <CustomersList clients={data} />
+                        : <NewCustomerForm />
+                    }
+                </Container>
+                <Footer ismobilefixed />
+            </Background>
+        </>
     );
 };
 

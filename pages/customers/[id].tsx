@@ -14,6 +14,7 @@ import  Router  from "next/router";
 import Footer from "../../src/components/footer";
 import { useAuth } from "../../src/hooks/AuthHook";
 import styled from 'styled-components'
+import Head from "../../src/infra/head";
 
 const Container = styled.div`
     max-width: 90rem;
@@ -85,6 +86,8 @@ function Customer({ id }) {
 
 
     return (
+        <>
+        <Head title="YourApp | Customer"/>
         <Background fixed backgroundImage='/img/background2.jpg'>
             <Header />
             <MobileHeader />
@@ -96,7 +99,7 @@ function Customer({ id }) {
             </Container>
             <Footer />
         </Background>
-
+    </>
     );
 };
 
