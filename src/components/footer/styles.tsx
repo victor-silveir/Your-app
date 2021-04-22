@@ -9,6 +9,7 @@ export const Footr = styled.footer`
     z-index: -1;
 
     @media(max-width: 450px) {
+        position: ${props => props.ismobilefixed && 'fixed'};
         width: 150%;
     }
 `

@@ -56,7 +56,7 @@ function Customers() {
                     : <NewCustomerForm />
                 }
             </Container>
-            <Footer isfixed/>
+            <Footer ismobilefixed/>
         </Background>
     );
 };
