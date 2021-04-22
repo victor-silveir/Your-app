@@ -9,10 +9,12 @@ import { UpdateCustomerSchema } from "../../services/validation/YupSchemas";
 import { ErrorField } from '../../components/basic components/ErrorsMessage/styles'
 import { putCustomer } from "../../services/axios/api";
 import { CustomerData } from "../../models/CustomerData";
+import useCep from "../../hooks/ViaCepHook";
+import { AddressType } from "../../models/AddressType";
 
 function UpdateCustomerForm(props) {
 
-    const { register, handleSubmit, formState: { errors }, control } = useForm({
+    const { register, handleSubmit, formState: { errors }, control, setValue } = useForm({
         defaultValues: props.initialvalues,
         resolver: yupResolver(UpdateCustomerSchema)
     });
@@ -67,7 +69,17 @@ function UpdateCustomerForm(props) {
                     <div>{errors.state?.message}</div>
                 </ErrorField>
                 <AdressSection1>
-                    <Input padding='0.5rem' width='25%' name="zipCode" placeholder="CEP*:" ref={register} onChange={(event) => {
+                    <Input padding='0.5rem' width='25%' onBlur={async (event) => {
+                      await useCep<AddressType>(event).then(response => {
+                          setValue('address', response.logradouro);
+                          setValue('complement', response.complemento)
+                          setValue('district', response.bairro)
+                          setValue('city', response.localidade)
+                          setValue('state', response.uf)
+                      }).catch(err => {
+                          alert("Invalid Zip Code!");
+                      });
+                    }} name="zipCode" placeholder="CEP*:" ref={register} onChange={(event) => {
                         const { value } = event.target;
                         event.target.value = mask(value, ['99999-999']);
                     }} isErrored={errors.zipCode} />
